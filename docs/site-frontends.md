@@ -124,26 +124,26 @@ A Next.js frontend for a digital marketplace powered by Medusa (commerce) and St
 
 ## Execution Plan
 
-### Phase 1: Scaffolding (1 week)
+### Phase 1: Scaffolding
 - Initialize Next.js (App Router) with TypeScript, Tailwind, ESLint/Prettier
 - Base layout, Navbar/Footer, dark mode, design tokens
 - Integrate Auth provider and session context; role gates for Dashboard
 
-### Phase 2: Data & Navigation (1–2 weeks)
+### Phase 2: Data & Navigation
 - Categories dropdown wired to Medusa/Strapi; ensure "Complete Projects" link present
 - Product listing (Home, Category) with SSR/ISR and pagination
 - Skeletons for lists, error boundaries, basic analytics
 
-### Phase 3: Product Detail & Gated Download (1–2 weeks)
+### Phase 3: Product Detail & Gated Download
 - Product detail page with carousel, breadcrumbs, tags, description
 - Tier badges on cards and detail; tooltip for gating
 - Server action for download: entitlement check + signed URL retrieval + download flow
 
-### Phase 4: Account & Pricing (1 week)
+### Phase 4: Account & Pricing
 - Profile page with tier, quota meter, downloads history, billing portal link
 - Pricing page with plans and upgrade CTA
 
-### Phase 5: Polish & QA (1 week)
+### Phase 5: Polish & QA
 - Accessibility pass, SEO metadata, performance tuning, loading states
 - E2E tests and bug fixes; content QA; i18n groundwork
 
