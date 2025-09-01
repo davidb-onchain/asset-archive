@@ -102,18 +102,18 @@ We are choosing Strapi (Community Edition) as the headless CMS for this project.
 
 ## Execution Plan
 
-### Phase 0: Inception (1–2 weeks)
+### Phase 0: Inception
 - Finalize requirements, pick stack (Medusa + Strapi primary), draft data models
 - Spike: local POC for digital product checkout, content page rendering
 - Deliverables: Architecture Decision Record (ADR), POC repo, backlog, project plan
 
-### Phase 1: Foundations (2–3 weeks)
+### Phase 1: Foundations
 - Stand up infra as code; CI/CD; base services (DB, Redis, storage, search, auth)
 - Bootstrap Medusa (products, pricing, checkout with Stripe) and Strapi (content types)
 - Next.js app scaffolding with Tailwind, tokens, layout, routing, SEO base
 - Deliverables: running staging env, Storybook seed components, API contracts
 
-### Phase 2: Core Features (4–6 weeks)
+### Phase 2: Core Features
 - Catalog: categories, collections, filters, search integration
 - Digital delivery: entitlement checks, signed URLs, license keys, download portal
 - Editorial: page builder blocks, blog, guides, announcements, previews
@@ -121,14 +121,14 @@ We are choosing Strapi (Community Edition) as the headless CMS for this project.
 - Admin workflows: draft/review/publish, scheduled publish, audit logs
 - Deliverables: E2E happy‑path, accessibility baseline, analytics wiring
 
-### Phase 3: Marketplace & Polish (3–5 weeks)
+### Phase 3: Marketplace & Polish
 - Discounts/coupons, wishlists, recently viewed
 - Multi‑region pricing and taxes; receipts/invoices with tax fields
 - Vendor groundwork (optional, behind feature flag)
 - Performance hardening, SEO enhancements, i18n rollout, error budgets
 - Deliverables: production readiness checklist, runbooks, SLO dashboards
 
-### Phase 4: Launch & Handover (1–2 weeks)
+### Phase 4: Launch & Handover
 - Content migration/imports, redirects, QA/UAT
 - Load testing, failover test, backup/restore drill
 - Deliverables: go‑live, training, documentation, post‑launch monitoring plan
