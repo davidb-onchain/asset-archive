@@ -1,167 +1,332 @@
-## Technical Specification: CMS for a Digital Marketplace
+## Strapi CMS for `https://unityassets4free.com` Refresh Site 
 
-### Overview
-A headless, extensible content management and commerce platform enabling a digital marketplace for downloadable assets and services. Objectives: fast iteration, modern UI with Tailwind, mobile‑first, SEO‑ready, scalable, and secure. Preference is to adopt an extensible open‑source solution over building from scratch.
 
-### Recommended Architecture (Adopt OSS + minimal glue)
-- Core approach: Headless commerce + Headless CMS + Next.js storefront/admin UI
-- Primary recommendation (Node/TypeScript stack):
-  - Commerce: Medusa (MIT, Node, REST/GraphQL, plugins for Stripe, digital products, carts/checkout, orders)
-  - CMS: Strapi (Community Edition, Node, REST/GraphQL, roles/permissions, i18n)
-  - Storefront/Admin UI: Next.js (App Router) + Tailwind CSS + Headless UI/Radix
-  - Search: Meilisearch (open‑source) or Algolia (hosted)
-  - Auth: Keycloak (open‑source) or Auth.js with providers
-  - Payments: Stripe
-  - Storage/CDN: S3‑compatible (Cloudflare R2, MinIO) + CDN (Cloudflare)
-  - Infra: Docker, Terraform, GitHub Actions
+### Components
+- Strapi (Headless CMS): Core content types, relations, admin UI, API for frontend.
+- CMS DB: PostgreSQL for Strapi.
+- Content Server SQL: Source of truth for raw URLs and extracted metadata (from Unity project).
+- Ingestion Worker: Node.js/TypeScript sidecar that syncs content-server SQL → Strapi via Admin API.
+- ArchiveBox: Page archiving system (Dockerized) with data at `/srv/archivebox/data` (see `page-archiver.md`).
+- Archive Orchestrator: Worker module to enqueue ArchiveBox jobs and poll statuses; persists snapshots in Strapi.
+- Media Library:
+  - Image assets collected from content-server are stored using Strapi Upload Provider (local, S3, or compatible) and linked to Products.
+  - Optional: MediaFire uploader integration for downloadable files (page URLs recorded; see `mediafire-uploader.md`).
+- Log Stream:
+  - Unity Metadata Extractor emits `run.log`, `metadata.jsonl` (see `metadata-project.md`).
+  - Log shipper (e.g., `vector` or `promtail`) tails logs to Loki/Elastic, or a lightweight WebSocket tailer. Strapi Admin plugin displays live feed and summaries.
 
-- Alternatives
-  - Saleor (GraphQL, Python) + Next.js + Tailwind; excellent commerce core; keep Strapi or Wagtail for editorial
-  - WordPress + WooCommerce + Dokan (multi‑vendor) headless via WPGraphQL; pragmatic, mature plugin ecosystem
-  - Payload CMS (Node) with commerce plugins; unified codebase tradeoff
+### High-Level Data Flow
+1) Unity extractor processes `.unitypackage` files → writes JSONL/CSV + logs.
+2) Content-server SQL aggregates package metadata and associated source URLs.
+3) Ingestion Worker periodically syncs new/updated rows into Strapi content types.
+4) Archive Orchestrator triggers ArchiveBox for missing/updated URLs; stores snapshot data in Strapi.
+5) Frontend fetches Products/Categories/Publishers/Images via Strapi REST/GraphQL.
+6) Admins manage overrides, manual entries, and ad-hoc ArchiveBox runs via Strapi.
 
-Selection rationale: Medusa + Strapi provide strong OSS ecosystems, TypeScript alignment, plugin models, and clear separation of editorial content vs transactional commerce. Both are battle‑tested and avoid vendor lock‑in.
+### Deployment (Docker Compose)
+- Services: `strapi`, `postgres`, `redis` (queues), `ingestion-worker`, `archive-orchestrator` (can be one worker), `archivebox`, `log-collector` (optional `loki` + `promtail` or `vector`).
+- Volumes: `/srv/archivebox/data`, Strapi uploads, database volumes.
+- Network: Internal bridge; Strapi exposed on LAN/Internet per needs; ArchiveBox bound to loopback or behind reverse proxy.
 
-### CMS Decision
-We are choosing Strapi (Community Edition) as the headless CMS for this project.
+---
 
-### Functional Requirements
-- Content & Editorial
-  - Flexible page builder: hero, grids, feature blocks, testimonials, FAQs
-  - Blog, guides, release notes, announcements
-  - Asset documentation pages, changelogs, version notes
-  - Media library with metadata, alt text, renditions, rights
-  - Draft/publish workflow, review/approve, scheduled publishing
-  - SEO fields: title, description, canonical, open graph, structured data
-- Marketplace & Catalog
-  - Digital products, variants, bundles, subscriptions
-  - Categories, tags, collections, facets and filters
-  - Multi‑currency pricing, regional tax (VAT/GST), discounts/coupons
-  - Inventory/entitlements for digital goods (download limits, expiration)
-  - Licensing (file downloads, license keys), versioned releases
-  - Wishlists, recently viewed, compare
-- Vendors & Operations
-  - Single‑vendor now; roadmap for multi‑vendor (onboarding, commissions, payouts)
-  - Order management, refunds, partial refunds, support notes
-  - Customer accounts, profiles, order history, invoices
-  - Email notifications: order confirmations, fulfillment, refund, password reset
-- Search & Discovery
-  - Full‑text search with synonyms, typo tolerance, relevance tuning
-  - Autocomplete, filters, sort, pagination
-- Localization & Accessibility
-  - i18n for content and product data; locale‑aware URLs
-  - WCAG 2.1 AA accessibility across UI
-- Analytics & Reporting
-  - Traffic and conversion analytics; product performance; funnel tracking
-  - Content performance (views, CTR), search queries, zero‑result terms
-- Integrations
-  - Payments (Stripe), email (Postmark/SES), webhooks, web analytics (Plausible/GA)
+## Data Model (Strapi Content Types)
 
-### Non‑Functional Requirements
-- Performance: p95 TTFB < 300ms (cached), LCP < 2.5s on 4G, CLS < 0.1, API p95 < 250ms
-- Availability: 99.9% SLA target; zero‑downtime deploys
-- Scalability: horizontal stateless services; cache with Redis; CDN edge caching
-- Security: OWASP ASVS L2, SAST/DAST, dependency scanning; secrets in vault; RBAC
-- Privacy/Compliance: GDPR/CCPA; data retention policies; consent banner; audit logs
-- Observability: logs (structured), metrics, traces; alerting on SLOs
+### 1) Product (Collection type)
+- `title` (string, required)
+- `slug` (UID from `title`, unique)
+- `shortDescription` (text)
+- `description` (rich text/Markdown)
+- `publisher` (relation: many-to-one → Publisher)
+- `categories` (relation: many-to-many → Category)
+- `tags` (JSON array of strings or Tag relation)
+- `images` (media: multiple; gallery thumbnails and detail images)
+- `sourceUrls` (relation: many-to-many → SourceUrl)
+- `archiveSnapshots` (relation: one-to-many → ArchiveSnapshot)
+- `unityPackages` (relation: one-to-many → UnityPackage)
+- `status` (enum: draft, published, archived)
+- `visibility` (enum: public, hidden; for editorial control)
+- `originalCreatedAt` (datetime; from content-server if available)
+- `originalUpdatedAt` (datetime)
+- `metadata` (JSON: arbitrary key/values including heuristics: suspectedName, suspectedVersion)
 
-### Data Model (high‑level)
-- CMS (Strapi)
-  - Content types: `Page`, `BlogPost`, `Guide`, `Announcement`, `HeroBlock`, `FeatureBlock`, `CTA`, `FAQ`, `MediaAsset`, `SeoMeta`
-- Commerce (Medusa)
-  - `Product`, `Variant`, `Price`, `Collection`, `Category`, `Discount`, `Cart`, `Order`, `Fulfillment`, `Customer`, `Region`
-  - Digital delivery: `DigitalAsset` (file, version, checksum), `LicenseKey`, `Entitlement`
-- Identity
-  - `User`, `Role`, `Permission`, `Session`, `AuditEvent`
+Notes:
+- Frontend cards use `images[0]` as thumbnail, `title`, `shortDescription`, `categories`, and `publisher`.
+- Since site is free, no download gating; leave tier fields out or set `tier=public` if needed for UI consistency.
 
-### APIs & Contracts
-- CMS API: GraphQL (preferred) + REST for media; rate limits, ETags; webhooks on publish
-- Commerce API: REST/GraphQL; idempotent checkout and refunds; HMAC‑signed webhooks
-- Webhooks: order.created, order.fulfilled, refund.created, content.published
-- Download URLs: short‑lived signed URLs via storage layer; access policy checks
+### 2) Publisher (Collection type)
+- `name` (string, required, unique)
+- `slug` (UID)
+- `website` (string)
+- `assetStoreUrl` (string)
+- `logo` (media, single)
+- `description` (rich text)
 
-### Security Model
-- RBAC: Admin, Editor, Reviewer, Support, Vendor, Customer
-- SSO/OIDC via Keycloak/Auth0; MFA for admins; passwordless optional
-- Data protection: AES‑256 at rest (managed), TLS 1.2+ in transit, CSP, HSTS, CSRF
-- Backups: daily full, hourly WAL/incremental; tested restores; retention tiers
+### 3) Category (Collection type)
+- `name` (string, required, unique)
+- `slug` (UID)
+- `parent` (self-relation: many-to-one for hierarchy)
+- `description` (text)
 
-### Theming & UI
-- Tailwind CSS with design tokens; dark mode; prefers‑reduced‑motion
-- Component library: Headless UI/Radix primitives; Storybook for docs/visual tests
-- Mobile‑first layouts; responsive images; accessible modals, menus, forms
-- Page builder driven by CMS blocks; preview mode; SEO‑friendly routing
+Ensure a dedicated "Complete Projects" category exists for parity with frontend nav.
 
-### Deployment & Environments
-- Envs: `dev`, `staging`, `prod`
-- Infra: Docker images; Postgres (Medusa/Strapi), Redis (cache/queue), S3‑compatible storage, Meilisearch, Keycloak
-- CI/CD: GitHub Actions for build/test/lint, preview deploys, migrations, smoke tests
-- IaC: Terraform for cloud resources; per‑env workspaces; least privilege IAM
+### 4) SourceUrl (Collection type)
+- `url` (string, required, unique)
+- `type` (enum: assetstore, publisher, docs, video, community, other)
+- `discoveredBy` (enum: cache, embedded, name-heuristics, guid-fingerprint, online-search)
+- `confidence` (decimal 0.0–1.0)
+- `firstSeenAt` (datetime)
+- `lastSeenAt` (datetime)
+- `notes` (text)
+- Relations: `products` (many-to-many), `archiveSnapshots` (one-to-many)
+
+### 5) ArchiveSnapshot (Collection type)
+- `sourceUrl` (relation: many-to-one → SourceUrl)
+- `product` (relation: many-to-one → Product)
+- `jobId` (string)
+- `status` (enum: queued, running, complete, failed)
+- `pageUrl` (string; canonical URL archived)
+- `snapshotUrl` (string; ArchiveBox index URL for the capture)
+- `timestamp` (datetime; capture time)
+- `outlinksCount` (integer)
+- `sizeBytes` (bigint)
+- `details` (JSON; ArchiveBox metadata)
+
+### 6) UnityPackage (Collection type)
+- `inputPath` (string; absolute path)
+- `fileName` (string)
+- `fileSizeBytes` (bigint)
+- `sha256` (string)
+- `sha1` (string)
+- `assetCount` (integer)
+- `assetExtensions` (JSON)
+- `rootFolders` (JSON)
+- `guidSample` (JSON)
+- `guidCount` (integer)
+- `suspectedName` (string)
+- `suspectedVersion` (string)
+- `publisherName` (string)
+- `assetStoreUrl` (string)
+- `assetId` (string)
+- `confidence` (decimal)
+- `detectionMethods` (JSON array)
+- `error` (string, nullable)
+- `processedAt` (datetime)
+- `durationMs` (integer)
+- Relations: `product` (many-to-one → Product)
+
+### 7) MediaFireFile (Optional; Collection type)
+- `localPath` (string)
+- `sizeBytes` (bigint)
+- `mimeType` (string)
+- `checksum` (string)
+- `quickKey` (string)
+- `pageUrl` (string)
+- `directUrl` (string, nullable)
+- `folderKey` (string, nullable)
+- `status` (enum: uploaded, failed)
+- `createdAtRemote` (datetime)
+- Relations: `products` (many-to-many) for linking downloads.
+
+### 8) IngestionRun (Single or Collection type)
+- `startedAt`, `completedAt`, `status` (enum)
+- `stats` (JSON: processed, created, updated, skipped, errors)
+- `logExcerpt` (text)
+
+### 9) LiveLog (Virtual/Read-Only)
+- Not persisted by Strapi; exposed by a custom admin plugin that tails Unity `run.log` and `metadata.jsonl` events. Provides WebSocket feed and searchable history via Log backend.
+
+---
+
+## Ingestion & Sync Design
+
+### Sources
+- Content-server SQL views/tables containing:
+  - Unity package metadata and derived fields (see `metadata-project.md`).
+  - URL tables mapping packages/products to discovered `assetstore.unity.com` and other links.
+
+### Connector
+- Ingestion Worker connects to content-server SQL (read-only) and to Strapi Admin API.
+- Scheduling via cron (e.g., every 10–30 minutes) and on-demand via admin action.
+
+### Mapping & Idempotency
+- Deterministic keys:
+  - Product identity: normalized `publisherName + suspectedName + suspectedVersion` or `assetId` when present.
+  - SourceUrl identity: `url` unique.
+  - UnityPackage identity: `sha256` or `inputPath` + `sha1`.
+- Conflict resolution:
+  - Prefer manual edits in Strapi over automated fields (flag `isManualOverride` per field set tracked in `metadata` with source-of-truth markers).
+  - Ingestion only updates fields not marked overridden.
+- Upserts:
+  - Create missing entities; update existing based on identities.
+  - Attach relations (publisher/category/sourceUrls) idempotently.
+- Audit:
+  - Record `IngestionRun` with counts and error messages.
+
+### Media Handling (Images)
+- Content-server provides or references image assets; Ingestion Worker imports these into Strapi using Upload API and attaches to Product `images`.
+- Dedup via content hash; avoid duplicates in the media library.
+
+---
+
+## ArchiveBox Integration
+
+### Triggering Captures
+- For each `SourceUrl` linked to a `Product`, if no recent `ArchiveSnapshot` exists or older than TTL (e.g., 180 days), enqueue capture.
+- Admin can trigger a capture from Strapi (custom controller/action) for any `SourceUrl`.
+
+### Execution Paths
+- Primary: `docker compose run archivebox add <URL>` or HTTP if ArchiveBox API is enabled.
+- Orchestrator polls ArchiveBox index (SQLite/JSON/FS) or CLI `list`/`status` to determine completion.
+
+### Persisting Results
+- On completion, create `ArchiveSnapshot` with `snapshotUrl`, `timestamp`, size, and metadata.
+- Link snapshot to `Product` and `SourceUrl`.
+
+### Retry & Backoff
+- Exponential backoff on transient errors; cap retries; surface failures in `ArchiveSnapshot.status=failed` with reason.
+
+---
+
+## Manual Workflows (Admin UX in Strapi)
+
+- Create/Edit Product:
+  - Title, description, publisher, categories, tags.
+  - Upload/select images for gallery.
+  - Attach existing `SourceUrl` or create new ones.
+  - Button: "Archive Now" to enqueue ArchiveBox for attached URLs.
+- Create Publisher/Category entries.
+- Link Unity Packages to Products (for provenance and details).
+- Add/Link MediaFire files (optional downloads section) using quickkey/page URL.
+- Override fields (lock certain fields against future sync updates).
+- View ingestion runs; re-run ingestion; view diffs for a Product.
+- Live Logs page: real-time Unity extractor logs with filters; quick links to latest errors and to assets referenced in the logs.
+
+---
+
+## Permissions, Roles, and Access
+
+- Public API access: read-only across published content.
+- Roles:
+  - Admin: full access; manage settings, triggers, and plugins.
+  - Editor: manage content, run ArchiveBox jobs, view logs.
+  - Viewer: read-only admin view (optional), no mutations.
+- CORS: allow Next.js frontend origin(s).
+
+---
+
+## API Contracts for Frontend (Strapi)
+
+### REST (default)
+- List Products (home, category):
+  - `GET /api/products?populate=images,publisher,categories&sort=createdAt:desc&pagination[page]={n}&pagination[pageSize]=24`
+- Category Listing:
+  - `GET /api/categories?populate=deep`
+- Products by Category Slug:
+  - `GET /api/products?filters[categories][slug][$eq]={slug}&populate=images,publisher,categories&pagination[page]={n}&pagination[pageSize]=24`
+- Product Detail by Slug:
+  - `GET /api/products/{id or slug}?populate=images,publisher,categories,archiveSnapshots`
+- Publishers:
+  - `GET /api/publishers?populate=logo`
+
+### GraphQL (optional)
+- Enable Strapi GraphQL plugin for typed queries used by Next.js RSC.
+
+### SEO & Metadata
+- Include canonical URL, Open Graph fields derived from Product fields and images.
+
+---
+
+## Logging & Observability
+
+### Unity Extractor Live Logs
+- Log shipper tails `run.log` and pushes to a store (Loki/Elastic) and a lightweight WebSocket endpoint.
+- Strapi Admin plugin subscribes to WebSocket; displays stream with severity filters, search, and links into content.
+- Summaries: recent runs, error rate, processed counts (from `IngestionRun`).
+
+### System Health
+- Health checks for Strapi, DB, ArchiveBox, Ingestion Worker.
+- Alerts (optional): container restarts, ingestion failures.
+
+---
+
+## Security & Privacy
+- No secrets in logs.
+- Strapi Admin behind authentication; optional IP allowlist or SSO.
+- ArchiveBox bound to loopback; exposed only via reverse proxy if needed.
+- Public content is read-only; admin actions audited.
 
 ---
 
 ## Execution Plan
 
-### Phase 0: Inception
-- Finalize requirements, pick stack (Medusa + Strapi primary), draft data models
-- Spike: local POC for digital product checkout, content page rendering
-- Deliverables: Architecture Decision Record (ADR), POC repo, backlog, project plan
+### Phase 1 — Foundation (0.5–1 day)
+- Provision Docker Compose for Strapi + Postgres + ArchiveBox.
+- Configure Strapi Upload provider (local disk or S3-compatible).
+- Bootstrap roles, CORS, and basic settings.
 
-### Phase 1: Foundations
-- Stand up infra as code; CI/CD; base services (DB, Redis, storage, search, auth)
-- Bootstrap Medusa (products, pricing, checkout with Stripe) and Strapi (content types)
-- Next.js app scaffolding with Tailwind, tokens, layout, routing, SEO base
-- Deliverables: running staging env, Storybook seed components, API contracts
+### Phase 2 — Content Types & Admin UX (1–2 days)
+- Implement content types: Product, Publisher, Category, SourceUrl, ArchiveSnapshot, UnityPackage, IngestionRun, MediaFireFile.
+- Configure list/detail views, default populations, and field layouts in Strapi admin.
+- Create custom actions: "Archive Now", override locks, ingestion trigger.
 
-### Phase 2: Core Features
-- Catalog: categories, collections, filters, search integration
-- Digital delivery: entitlement checks, signed URLs, license keys, download portal
-- Editorial: page builder blocks, blog, guides, announcements, previews
-- Account area: orders, invoices, downloads, subscription management
-- Admin workflows: draft/review/publish, scheduled publish, audit logs
-- Deliverables: E2E happy‑path, accessibility baseline, analytics wiring
+### Phase 3 — Ingestion Worker (1–2 days)
+- Build Node.js worker:
+  - SQL connector to content-server (read-only).
+  - Mapping + idempotent upserts into Strapi Admin API.
+  - Media import/upload and dedupe.
+  - IngestionRun records and metrics.
+- Schedule cron and manual trigger endpoints.
 
-### Phase 3: Marketplace & Polish
-- Discounts/coupons, wishlists, recently viewed
-- Multi‑region pricing and taxes; receipts/invoices with tax fields
-- Vendor groundwork (optional, behind feature flag)
-- Performance hardening, SEO enhancements, i18n rollout, error budgets
-- Deliverables: production readiness checklist, runbooks, SLO dashboards
+### Phase 4 — Archive Orchestration (1 day)
+- Implement ArchiveBox enqueue + poll; snapshot parsing and persistence.
+- TTL-based refresh; admin-triggered jobs.
 
-### Phase 4: Launch & Handover
-- Content migration/imports, redirects, QA/UAT
-- Load testing, failover test, backup/restore drill
-- Deliverables: go‑live, training, documentation, post‑launch monitoring plan
+### Phase 5 — Live Logs & Metrics (1 day)
+- Set up log shipper (promtail/vector) and lightweight WebSocket relay.
+- Build Strapi Admin plugin page for real-time logs and summaries.
+
+### Phase 6 — Frontend Integration & Polish (1 day)
+- Validate API contracts with Next.js frontend (`site-frontends.md`).
+- Ensure pagination, categories, product detail, images, and publisher data are correctly exposed with ISR-friendly caching headers.
+- Add basic E2E checks.
+
+### Phase 7 — QA & Handover (0.5–1 day)
+- Backfill archive snapshots for existing URLs.
+- Load test listing endpoints and media delivery.
+- Document runbooks and backup/restore for Strapi and ArchiveBox data.
 
 ---
 
 ## Deliverables
-- Architecture
-  - ADRs, high‑level diagrams, data model diagrams, API schemas (OpenAPI/GraphQL SDL)
-- Source Code
-  - Next.js frontend (Tailwind, Storybook), CMS schemas, Medusa plugins (digital delivery, license keys), infra modules
-- Infrastructure
-  - Terraform modules, Dockerfiles, GitHub Actions pipelines, environment configs
-- Content & UI
-  - Tailwind design tokens, component library, page builder blocks, accessibility reports
-- Operations
-  - Runbooks, SLO/SLA definitions, observability dashboards (logs/metrics/traces), backup/restore procedures, security policies
-- Documentation
-  - Developer guide, Admin/Editor guide, Vendor onboarding (if enabled), Release notes
+- Docker Compose stack:
+  - `strapi`, `postgres`, `archivebox`, `ingestion-worker`, `archive-orchestrator`, optional `redis`, `log-collector`.
+- Strapi project repository:
+  - Content types and relations defined as code (schema JSON).
+  - Role & permission configuration; CORS; Upload provider config.
+  - Admin customizations (views, actions, and Live Logs plugin page).
+- Ingestion Worker repository:
+  - SQL connector, mapping logic, idempotent upserts, media import, CLI + cron.
+  - Config via environment variables; structured logging.
+- Archive Orchestrator module:
+  - Enqueue/poll logic; ArchiveBox integration; snapshot persistence.
+- Example data:
+  - Sample imported Products, Categories, Publishers, SourceUrls.
+  - A few ArchiveSnapshots and Media images for the frontend.
 
 ---
 
-## Risk & Mitigation Highlights
-- Scope creep: enforce MVP cut, ADRs, change control
-- Digital rights enforcement: signed URLs, short TTL, watermarking option, entitlement checks
-- Search quality: relevance tuning, synonyms, zero‑result monitoring
-- Vendor marketplace complexity: phase behind feature flags; consider WooCommerce/Dokan if timelines demand
-
----
-
-## Tooling Stack Summary (recommended)
-- Backend: Medusa (commerce), Strapi (CMS), Keycloak (auth), Meilisearch (search)
-- Frontend: Next.js (App Router), Tailwind, Storybook, Radix/Headless UI
-- Data: Postgres, Redis, S3‑compatible object storage
-- Payments/Email: Stripe, Postmark/SES
-- DevOps: Docker, Terraform, GitHub Actions, Cloudflare CDN/DNS
+## Acceptance Criteria
+- Given a populated content-server SQL, running the Ingestion Worker creates/updates Strapi Products with publishers, categories, images, and linked source URLs.
+- Admin can:
+  - Manually edit Products and lock fields against future automatic updates.
+  - Create new Products and SourceUrls not present in the content-server.
+  - Trigger ArchiveBox for any SourceUrl and see resulting snapshots.
+  - View real-time Unity extractor logs in the Strapi admin UI.
+- Frontend can:
+  - List Products (24/page), filter by category, view product detail with gallery, publisher, categories, and snapshot links.
+  - Access public read endpoints with appropriate CORS headers.
+- System stability:
+  - Ingestion is idempotent and resume-safe; failures are logged with actionable errors.
+  - ArchiveBox jobs complete and persist snapshot metadata with statuses.
+  - Logs stream reliably and are viewable historically (if log store is enabled).
