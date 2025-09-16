@@ -1,0 +1,104 @@
+name: Terraform Plan
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'deploy/public-dev/infra/**'
+
+# Required for the github-script action to post comments
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  terraform-plan:
+    name: Terraform Plan
+    runs-on: ubuntu-latest
+    
+    env:
+      TF_DIR: deploy/public-dev/infra
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Determine Environment from PR Base Branch
+        id: environment
+        run: |
+          if [[ "${{ github.base_ref }}" == "main" ]]; then
+            echo "workspace=prod" >> $GITHUB_OUTPUT
+            echo "tfvars_file=prod.tfvars" >> $GITHUB_OUTPUT
+            echo "do_token=${{ secrets.DO_PROD_TOKEN }}" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.base_ref }}" == "develop" ]]; then
+            echo "workspace=dev" >> $GITHUB_OUTPUT
+            echo "tfvars_file=dev.tfvars" >> $GITHUB_OUTPUT
+            echo "do_token=${{ secrets.DO_DEV_TOKEN }}" >> $GITHUB_OUTPUT
+          else
+            echo "Invalid base branch for planning. Exiting."
+            exit 1
+          fi
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ${{ env.TF_DIR }}
+        env:
+          DIGITALOCEAN_TOKEN: ${{ steps.environment.outputs.do_token }}
+
+      - name: Terraform Workspace
+        run: terraform workspace select ${{ steps.environment.outputs.workspace }} || terraform workspace new ${{ steps.environment.outputs.workspace }}
+        working-directory: ${{ env.TF_DIR }}
+        env:
+          DIGITALOCEAN_TOKEN: ${{ steps.environment.outputs.do_token }}
+          
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color -var-file="${{ steps.environment.outputs.tfvars_file }}"
+        working-directory: ${{ env.TF_DIR }}
+        env:
+          DIGITALOCEAN_TOKEN: ${{ steps.environment.outputs.do_token }}
+        continue-on-error: true # Allows the next step to run even if the plan fails
+
+      - name: Post Plan to PR
+        uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        env:
+          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // Get the output from the plan step
+            const plan_output = `${{ steps.plan.outputs.stdout }}`
+            const plan_exitcode = `${{ steps.plan.outcome }}`
+            let summary;
+
+            if (plan_exitcode == 'failure') {
+              summary = 'Terraform Plan Failed';
+            } else if (plan_output.includes("No changes. Your infrastructure matches the configuration.")) {
+              summary = 'No Changes Detected';
+            } else {
+              summary = 'Terraform Plan Details';
+            }
+            
+            // Post a comment on the PR
+            const output = `### ${summary} for \`${{ steps.environment.outputs.workspace }}\`
+
+            <details><summary>Show Plan</summary>
+
+            \`\`\`${process.env.PLAN}\`\`\`
+
+            </details>
+
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })

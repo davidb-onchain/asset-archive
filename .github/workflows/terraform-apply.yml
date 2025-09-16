@@ -1,0 +1,61 @@
+name: Terraform Apply
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'deploy/public-dev/infra/**'
+
+permissions:
+  contents: read
+
+jobs:
+  terraform-apply:
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+
+    env:
+      TF_DIR: deploy/public-dev/infra
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Determine Environment from Push Branch
+        id: environment
+        run: |
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            echo "workspace=prod" >> $GITHUB_OUTPUT
+            echo "tfvars_file=prod.tfvars" >> $GITHUB_OUTPUT
+            echo "do_token=${{ secrets.DO_PROD_TOKEN }}" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref_name }}" == "develop" ]]; then
+            echo "workspace=dev" >> $GITHUB_OUTPUT
+            echo "tfvars_file=dev.tfvars" >> $GITHUB_OUTPUT
+            echo "do_token=${{ secrets.DO_DEV_TOKEN }}" >> $GITHUB_OUTPUT
+          else
+            echo "Invalid push branch for apply. Exiting."
+            exit 1
+          fi
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ${{ env.TF_DIR }}
+        env:
+          DIGITALOCEAN_TOKEN: ${{ steps.environment.outputs.do_token }}
+
+      - name: Terraform Workspace
+        run: terraform workspace select ${{ steps.environment.outputs.workspace }} || terraform workspace new ${{ steps.environment.outputs.workspace }}
+        working-directory: ${{ env.TF_DIR }}
+        env:
+          DIGITALOCEAN_TOKEN: ${{ steps.environment.outputs.do_token }}
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -var-file="${{ steps.environment.outputs.tfvars_file }}"
+        working-directory: ${{ env.TF_DIR }}
+        env:
+          DIGITALOCEAN_TOKEN: ${{ steps.environment.outputs.do_token }}

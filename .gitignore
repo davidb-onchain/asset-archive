@@ -2,11 +2,17 @@
 .content/
 .project/
 .secrets/
+.deploy/
+.backup/
+.scripts/
 
 # Also ignore these folders if they appear anywhere in the directory tree
 **/.content/
 **/.project/
 **/.secrets/
+**/.deploy/
+**/.backup/
+**/.scripts/
 
 # Ignore push-branch.sh script
 push-branch.sh
@@ -103,3 +109,6 @@ temp/
 .Trashes
 ehthumbs.db
 Thumbs.db
+# Ignore push-branch.sh script
+push-branch.sh
+**/push-branch.sh
