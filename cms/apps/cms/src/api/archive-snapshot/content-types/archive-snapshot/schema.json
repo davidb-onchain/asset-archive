@@ -1,0 +1,21 @@
+{
+  "collectionName": "archive_snapshots",
+  "info": {
+    "singularName": "archive-snapshot",
+    "pluralName": "archive-snapshots",
+    "displayName": "ArchiveSnapshot"
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "sourceUrl": { "type": "relation", "relation": "manyToOne", "target": "api::source-url.source-url", "inversedBy": "archiveSnapshots" },
+    "product": { "type": "relation", "relation": "manyToOne", "target": "api::product.product", "inversedBy": "archiveSnapshots" },
+    "jobId": { "type": "string" },
+    "status": { "type": "enumeration", "enum": ["queued", "running", "complete", "failed"] },
+    "pageUrl": { "type": "string" },
+    "snapshotUrl": { "type": "string" },
+    "timestamp": { "type": "datetime" },
+    "outlinksCount": { "type": "integer" },
+    "sizeBytes": { "type": "biginteger" },
+    "details": { "type": "json" }
+  }
+}
