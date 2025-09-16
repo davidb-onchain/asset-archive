@@ -1,0 +1,16 @@
+{
+  "collectionName": "ingestion_runs",
+  "info": {
+    "singularName": "ingestion-run",
+    "pluralName": "ingestion-runs",
+    "displayName": "IngestionRun"
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "startedAt": { "type": "datetime" },
+    "completedAt": { "type": "datetime" },
+    "status": { "type": "enumeration", "enum": ["pending", "running", "completed", "failed"] },
+    "stats": { "type": "json" },
+    "logExcerpt": { "type": "text" }
+  }
+}

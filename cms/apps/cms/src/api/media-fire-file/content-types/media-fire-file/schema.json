@@ -1,0 +1,22 @@
+{
+  "collectionName": "media_fire_files",
+  "info": {
+    "singularName": "media-fire-file",
+    "pluralName": "media-fire-files",
+    "displayName": "MediaFireFile"
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "localPath": { "type": "string" },
+    "sizeBytes": { "type": "biginteger" },
+    "mimeType": { "type": "string" },
+    "checksum": { "type": "string" },
+    "quickKey": { "type": "string" },
+    "pageUrl": { "type": "string" },
+    "directUrl": { "type": "string" },
+    "folderKey": { "type": "string" },
+    "status": { "type": "enumeration", "enum": ["uploaded", "failed"] },
+    "createdAtRemote": { "type": "datetime" },
+    "products": { "type": "relation", "relation": "manyToMany", "target": "api::product.product" }
+  }
+}
