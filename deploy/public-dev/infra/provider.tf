@@ -8,7 +8,14 @@ terraform {
 }
 
 provider "digitalocean" {
-  # The DigitalOcean API token is automatically sourced from the
-  # DIGITALOCEAN_TOKEN environment variable. In your CI/CD environment,
-  # you should set this variable using your DO_DEV repository secret.
+  token = var.do_token
+}
+
+# This is a dummy provider block to prevent Terraform from trying to
+# validate the DigitalOcean Spaces credentials against AWS services.
+provider "aws" {
+  region                      = "us-east-1"
+  skip_credentials_validation = true
+  skip_metadata_api_check     = true
+  skip_requesting_account_id  = true
 }
