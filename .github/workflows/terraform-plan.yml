@@ -7,6 +7,7 @@ on:
       - develop
     paths:
       - 'deploy/public-dev/infra/**'
+      - '.github/workflows/terraform-plan.yml'
 
 # Required for the github-script action to post comments
 permissions:
@@ -86,6 +87,8 @@ jobs:
         working-directory: ${{ env.TF_DIR }}
         env:
           DIGITALOCEAN_TOKEN: ${{ steps.environment.outputs.do_token }}
+          SPACES_ACCESS_KEY_ID: ${{ steps.environment.outputs.spaces_key_id }}
+          SPACES_SECRET_ACCESS_KEY: ${{ steps.environment.outputs.spaces_key_secret }}
           
       - name: Terraform Plan
         id: plan
@@ -98,6 +101,8 @@ jobs:
         working-directory: ${{ env.TF_DIR }}
         env:
           DIGITALOCEAN_TOKEN: ${{ steps.environment.outputs.do_token }}
+          SPACES_ACCESS_KEY_ID: ${{ steps.environment.outputs.spaces_key_id }}
+          SPACES_SECRET_ACCESS_KEY: ${{ steps.environment.outputs.spaces_key_secret }}
         continue-on-error: true # Allows the next step to run even if the plan fails
 
       - name: Post Plan to PR
