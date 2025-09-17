@@ -32,13 +32,13 @@ jobs:
           if [[ "${{ github.ref_name }}" == "main" ]]; then
             echo "workspace=prod" >> $GITHUB_OUTPUT
             echo "tfvars_file=prod.tfvars" >> $GITHUB_OUTPUT
-            echo "do_token=${{ secrets.DO_PROD_TOKEN }}" >> $GITHUB_OUTPUT
+            echo "do_token=${{ secrets.DO_PROD }}" >> $GITHUB_OUTPUT
             echo "spaces_key_id=${{ secrets.TF_STATE_BUCKET_PROD_KEY_ID }}" >> $GITHUB_OUTPUT
             echo "spaces_key_secret=${{ secrets.TF_STATE_BUCKET_PROD_KEY_SECRET }}" >> $GITHUB_OUTPUT
           elif [[ "${{ github.ref_name }}" == "develop" ]]; then
             echo "workspace=dev" >> $GITHUB_OUTPUT
             echo "tfvars_file=dev.tfvars" >> $GITHUB_OUTPUT
-            echo "do_token=${{ secrets.DO_DEV_TOKEN }}" >> $GITHUB_OUTPUT
+            echo "do_token=${{ secrets.DO_DEV }}" >> $GITHUB_OUTPUT
             echo "spaces_key_id=${{ secrets.TF_STATE_BUCKET_DEV_KEY_ID }}" >> $GITHUB_OUTPUT
             echo "spaces_key_secret=${{ secrets.TF_STATE_BUCKET_DEV_KEY_SECRET }}" >> $GITHUB_OUTPUT
           else

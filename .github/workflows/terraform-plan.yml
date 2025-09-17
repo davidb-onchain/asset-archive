@@ -34,18 +34,36 @@ jobs:
           if [[ "${{ github.base_ref }}" == "main" ]]; then
             echo "workspace=prod" >> $GITHUB_OUTPUT
             echo "tfvars_file=prod.tfvars" >> $GITHUB_OUTPUT
-            echo "do_token=${{ secrets.DO_PROD_TOKEN }}" >> $GITHUB_OUTPUT
+            echo "do_token=${{ secrets.DO_PROD }}" >> $GITHUB_OUTPUT
             echo "spaces_key_id=${{ secrets.TF_STATE_BUCKET_PROD_KEY_ID }}" >> $GITHUB_OUTPUT
             echo "spaces_key_secret=${{ secrets.TF_STATE_BUCKET_PROD_KEY_SECRET }}" >> $GITHUB_OUTPUT
           elif [[ "${{ github.base_ref }}" == "develop" ]]; then
             echo "workspace=dev" >> $GITHUB_OUTPUT
             echo "tfvars_file=dev.tfvars" >> $GITHUB_OUTPUT
-            echo "do_token=${{ secrets.DO_DEV_TOKEN }}" >> $GITHUB_OUTPUT
+            echo "do_token=${{ secrets.DO_DEV }}" >> $GITHUB_OUTPUT
             echo "spaces_key_id=${{ secrets.TF_STATE_BUCKET_DEV_KEY_ID }}" >> $GITHUB_OUTPUT
             echo "spaces_key_secret=${{ secrets.TF_STATE_BUCKET_DEV_KEY_SECRET }}" >> $GITHUB_OUTPUT
           else
             echo "Invalid base branch for planning. Exiting."
             exit 1
+          fi
+
+      - name: Debug - Check if secrets exist
+        run: |
+          if [ -n "${{ secrets.TF_STATE_BUCKET_DEV_KEY_ID }}" ]; then
+            echo "✓ TF_STATE_BUCKET_DEV_KEY_ID exists"
+          else
+            echo "✗ TF_STATE_BUCKET_DEV_KEY_ID is missing"
+          fi
+          if [ -n "${{ secrets.TF_STATE_BUCKET_DEV_KEY_SECRET }}" ]; then
+            echo "✓ TF_STATE_BUCKET_DEV_KEY_SECRET exists"
+          else
+            echo "✗ TF_STATE_BUCKET_DEV_KEY_SECRET is missing"
+          fi
+          if [ -n "${{ secrets.DO_DEV }}" ]; then
+            echo "✓ DO_DEV exists"
+          else
+            echo "✗ DO_DEV is missing"
           fi
 
       - name: Terraform Init

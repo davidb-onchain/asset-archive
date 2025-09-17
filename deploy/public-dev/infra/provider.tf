@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "digitalocean" {
-  token = var.do_token
+  # Token is automatically sourced from DIGITALOCEAN_TOKEN environment variable
 }
 
 # This is a dummy provider block to prevent Terraform from trying to
