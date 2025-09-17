@@ -33,10 +33,14 @@ jobs:
             echo "workspace=prod" >> $GITHUB_OUTPUT
             echo "tfvars_file=prod.tfvars" >> $GITHUB_OUTPUT
             echo "do_token=${{ secrets.DO_PROD_TOKEN }}" >> $GITHUB_OUTPUT
+            echo "spaces_key_id=${{ secrets.TF_STATE_BUCKET_PROD_KEY_ID }}" >> $GITHUB_OUTPUT
+            echo "spaces_key_secret=${{ secrets.TF_STATE_BUCKET_PROD_KEY_SECRET }}" >> $GITHUB_OUTPUT
           elif [[ "${{ github.ref_name }}" == "develop" ]]; then
             echo "workspace=dev" >> $GITHUB_OUTPUT
             echo "tfvars_file=dev.tfvars" >> $GITHUB_OUTPUT
             echo "do_token=${{ secrets.DO_DEV_TOKEN }}" >> $GITHUB_OUTPUT
+            echo "spaces_key_id=${{ secrets.TF_STATE_BUCKET_DEV_KEY_ID }}" >> $GITHUB_OUTPUT
+            echo "spaces_key_secret=${{ secrets.TF_STATE_BUCKET_DEV_KEY_SECRET }}" >> $GITHUB_OUTPUT
           else
             echo "Invalid push branch for apply. Exiting."
             exit 1
@@ -47,15 +51,21 @@ jobs:
         working-directory: ${{ env.TF_DIR }}
         env:
           DIGITALOCEAN_TOKEN: ${{ steps.environment.outputs.do_token }}
+          AWS_ACCESS_KEY_ID: ${{ steps.environment.outputs.spaces_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ steps.environment.outputs.spaces_key_secret }}
 
       - name: Terraform Workspace
         run: terraform workspace select ${{ steps.environment.outputs.workspace }} || terraform workspace new ${{ steps.environment.outputs.workspace }}
         working-directory: ${{ env.TF_DIR }}
         env:
           DIGITALOCEAN_TOKEN: ${{ steps.environment.outputs.do_token }}
+          AWS_ACCESS_KEY_ID: ${{ steps.environment.outputs.spaces_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ steps.environment.outputs.spaces_key_secret }}
 
       - name: Terraform Apply
         run: terraform apply -auto-approve -var-file="${{ steps.environment.outputs.tfvars_file }}"
         working-directory: ${{ env.TF_DIR }}
         env:
           DIGITALOCEAN_TOKEN: ${{ steps.environment.outputs.do_token }}
+          AWS_ACCESS_KEY_ID: ${{ steps.environment.outputs.spaces_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ steps.environment.outputs.spaces_key_secret }}
