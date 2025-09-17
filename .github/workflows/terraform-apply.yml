@@ -47,25 +47,22 @@ jobs:
           fi
 
       - name: Terraform Init
-        run: terraform init
+        run: |
+          terraform init \
+            -backend-config="access_key=${{ steps.environment.outputs.spaces_key_id }}" \
+            -backend-config="secret_key=${{ steps.environment.outputs.spaces_key_secret }}"
         working-directory: ${{ env.TF_DIR }}
         env:
           DIGITALOCEAN_TOKEN: ${{ steps.environment.outputs.do_token }}
-          AWS_ACCESS_KEY_ID: ${{ steps.environment.outputs.spaces_key_id }}
-          AWS_SECRET_ACCESS_KEY: ${{ steps.environment.outputs.spaces_key_secret }}
 
       - name: Terraform Workspace
         run: terraform workspace select ${{ steps.environment.outputs.workspace }} || terraform workspace new ${{ steps.environment.outputs.workspace }}
         working-directory: ${{ env.TF_DIR }}
         env:
           DIGITALOCEAN_TOKEN: ${{ steps.environment.outputs.do_token }}
-          AWS_ACCESS_KEY_ID: ${{ steps.environment.outputs.spaces_key_id }}
-          AWS_SECRET_ACCESS_KEY: ${{ steps.environment.outputs.spaces_key_secret }}
 
       - name: Terraform Apply
         run: terraform apply -auto-approve -var-file="${{ steps.environment.outputs.tfvars_file }}"
         working-directory: ${{ env.TF_DIR }}
         env:
           DIGITALOCEAN_TOKEN: ${{ steps.environment.outputs.do_token }}
-          AWS_ACCESS_KEY_ID: ${{ steps.environment.outputs.spaces_key_id }}
-          AWS_SECRET_ACCESS_KEY: ${{ steps.environment.outputs.spaces_key_secret }}

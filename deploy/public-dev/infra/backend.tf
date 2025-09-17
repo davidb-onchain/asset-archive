@@ -16,5 +16,6 @@ terraform {
     skip_credentials_validation = true
     skip_metadata_api_check     = true
     skip_region_validation      = true
+    s3_force_path_style         = true
   }
 }
