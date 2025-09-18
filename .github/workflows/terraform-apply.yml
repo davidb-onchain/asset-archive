@@ -75,9 +75,9 @@ jobs:
       - name: Terraform Apply
         run: |
           terraform apply -auto-approve \
-            -var='ssh_key_fingerprints=${{ steps.environment.outputs.ssh_key_fingerprints }}' \
+            -var='ssh_key_fingerprints=["${{ steps.environment.outputs.ssh_key_fingerprints }}"]' \
             -var="media_bucket_name=${{ steps.environment.outputs.media_bucket_name }}" \
-            -var='allowed_ssh_ips=${{ steps.environment.outputs.allowed_ssh_ips }}' \
+            -var='allowed_ssh_ips=["${{ steps.environment.outputs.allowed_ssh_ips }}"]' \
             -var="frontend_url=${{ steps.environment.outputs.frontend_url }}" \
             -var="do_project_id=${{ steps.environment.outputs.do_project_id }}"
         working-directory: ${{ env.TF_DIR }}
