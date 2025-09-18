@@ -39,9 +39,3 @@ variable "allowed_ssh_ips" {
   description = "A list of CIDR-formatted IP addresses that are allowed to connect via SSH. WARNING: Leaving this as the default is insecure and should be updated to your own IP address."
   default     = ["0.0.0.0/0"]
 }
-
-variable "do_project_id" {
-  type        = string
-  description = "The ID of the DigitalOcean project to deploy resources into."
-  # No default - this is a required variable.
-}
