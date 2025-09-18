@@ -37,6 +37,11 @@ resource "digitalocean_droplet" "backend" {
   tags = ["backend", terraform.workspace]
 }
 
+resource "digitalocean_project_resources" "backend" {
+  project   = var.do_project_id
+  resources = [digitalocean_droplet.backend.urn]
+}
+
 output "droplet_ip" {
   description = "The public IP address of the backend Droplet."
   value       = digitalocean_droplet.backend.ipv4_address

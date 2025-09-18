@@ -39,6 +39,7 @@ jobs:
             echo "media_bucket_name=${{ secrets.MEDIA_BUCKET_NAME_PROD }}" >> $GITHUB_OUTPUT
             echo "allowed_ssh_ips=${{ secrets.ALLOWED_SSH_IP_PROD }}" >> $GITHUB_OUTPUT
             echo "frontend_url=${{ secrets.FRONTEND_URL_PROD }}" >> $GITHUB_OUTPUT
+            echo "do_project_id=${{ secrets.DO_PROJECT_ID_PROD }}" >> $GITHUB_OUTPUT
           elif [[ "${{ github.ref_name }}" == "develop" ]]; then
             echo "workspace=dev" >> $GITHUB_OUTPUT
             echo "do_token=${{ secrets.DO_DEV }}" >> $GITHUB_OUTPUT
@@ -48,6 +49,7 @@ jobs:
             echo "media_bucket_name=${{ secrets.MEDIA_BUCKET_NAME }}" >> $GITHUB_OUTPUT
             echo "allowed_ssh_ips=${{ secrets.ALLOWED_SSH_IP }}" >> $GITHUB_OUTPUT
             echo "frontend_url=${{ secrets.FRONTEND_URL }}" >> $GITHUB_OUTPUT
+            echo "do_project_id=${{ secrets.DO_PROJECT_ID_DEV }}" >> $GITHUB_OUTPUT
           else
             echo "Invalid push branch for apply. Exiting."
             exit 1
@@ -73,10 +75,11 @@ jobs:
       - name: Terraform Apply
         run: |
           terraform apply -auto-approve \
-            -var='ssh_key_fingerprints=["${{ steps.environment.outputs.ssh_key_fingerprints }}"]' \
+            -var='ssh_key_fingerprints=${{ steps.environment.outputs.ssh_key_fingerprints }}' \
             -var="media_bucket_name=${{ steps.environment.outputs.media_bucket_name }}" \
-            -var='allowed_ssh_ips=["${{ steps.environment.outputs.allowed_ssh_ips }}"]' \
-            -var="frontend_url=${{ steps.environment.outputs.frontend_url }}"
+            -var='allowed_ssh_ips=${{ steps.environment.outputs.allowed_ssh_ips }}' \
+            -var="frontend_url=${{ steps.environment.outputs.frontend_url }}" \
+            -var="do_project_id=${{ steps.environment.outputs.do_project_id }}"
         working-directory: ${{ env.TF_DIR }}
         env:
           DIGITALOCEAN_TOKEN: ${{ steps.environment.outputs.do_token }}
