@@ -1,0 +1,46 @@
+# Docker Compose Override for Local Development
+# This file is automatically loaded by docker-compose and provides
+# development-specific configurations like volume mounts for live reloading
+
+services:
+  strapi:
+    volumes:
+      # Mount source code for live reloading during development
+      - ./services/cms/apps/cms/src:/opt/app/src:cached
+      - ./services/cms/apps/cms/config:/opt/app/config:cached
+      - ./services/cms/apps/cms/database:/opt/app/database:cached
+      # Keep uploads persistent but separate from source
+      - strapi_uploads:/opt/app/public/uploads
+      # Keep node_modules in container (don't mount from host)
+      - /opt/app/node_modules
+    environment:
+      # Enable development mode
+      - NODE_ENV=development
+      # Enable Strapi's auto-reload in development
+      - STRAPI_DISABLE_UPDATE_NOTIFICATION=true
+    
+  frontend:
+    volumes:
+      # Mount source code for Next.js hot reloading
+      - ./services/frontend/apps/frontend/app:/opt/app/app:cached
+      - ./services/frontend/apps/frontend/components:/opt/app/components:cached
+      - ./services/frontend/apps/frontend/contexts:/opt/app/contexts:cached
+      - ./services/frontend/apps/frontend/hooks:/opt/app/hooks:cached
+      - ./services/frontend/apps/frontend/lib:/opt/app/lib:cached
+      - ./services/frontend/apps/frontend/styles:/opt/app/styles:cached
+      - ./services/frontend/apps/frontend/public:/opt/app/public:cached
+      # Configuration files
+      - ./services/frontend/apps/frontend/next.config.mjs:/opt/app/next.config.mjs:cached
+      - ./services/frontend/apps/frontend/tailwind.config.ts:/opt/app/tailwind.config.ts:cached
+      - ./services/frontend/apps/frontend/tsconfig.json:/opt/app/tsconfig.json:cached
+      # Keep node_modules in container
+      - /opt/app/node_modules
+      - /opt/app/.next
+    environment:
+      # Enable Next.js development mode
+      - NODE_ENV=development
+      # Enable hot reloading
+      - FAST_REFRESH=true
+
+volumes:
+  strapi_uploads: 
