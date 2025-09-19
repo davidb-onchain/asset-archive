@@ -1,0 +1,97 @@
+# =============================================================================
+# TERRAFORM VARIABLES EXAMPLE
+# =============================================================================
+# Copy this file to terraform.tfvars and fill in your actual values
+# DO NOT commit terraform.tfvars to version control - add it to .gitignore
+#
+# This file shows all available variables and their expected formats.
+# Variables with defaults can be omitted if you're happy with the defaults.
+# =============================================================================
+
+# =============================================================================
+# REQUIRED VARIABLES (must be set)
+# =============================================================================
+
+# DigitalOcean API credentials
+do_token                   = "dop_v1_your_digitalocean_token_here"
+spaces_access_key_id       = "your_spaces_access_key_id_here"
+spaces_secret_access_key   = "your_spaces_secret_access_key_here"
+
+# Application secrets (generate secure random values)
+postgres_password = "your_secure_postgres_password_here"
+app_keys         = "key1,key2,key3,key4"  # Generate 4 random keys
+api_token_salt   = "your_api_token_salt_here"
+admin_jwt_secret = "your_admin_jwt_secret_here"
+transfer_token_salt = "your_transfer_token_salt_here"
+jwt_secret       = "your_jwt_secret_here"
+encryption_key   = "your_encryption_key_here"
+
+# =============================================================================
+# OPTIONAL VARIABLES (have defaults, can be overridden)
+# =============================================================================
+
+# Project configuration
+project_name = "asset-archive"  # Default: "asset-archive"
+environment  = "dev"            # Default: "dev"
+region       = "nyc3"           # Default: "nyc3"
+
+# Droplet configuration
+droplet_size  = "s-2vcpu-4gb"      # Default: "s-2vcpu-4gb" (2 vCPU, 4GB RAM)
+droplet_image = "ubuntu-22-04-x64"  # Default: "ubuntu-22-04-x64"
+ssh_key_name  = "asset-archive-key" # Default: "asset-archive-key"
+
+# Container images (will be updated by CI/CD)
+container_registry_images = {
+  cms      = "ghcr.io/davidb-onchain/asset-archive-cms:develop-137d3d6"
+  frontend = "ghcr.io/davidb-onchain/asset-archive-frontend:develop-137d3d6"
+}
+
+# Database configuration
+postgres_db   = "strapi"  # Default: "strapi"
+postgres_user = "strapi"  # Default: "strapi"
+
+# Security configuration
+allowed_ssh_ips = ["0.0.0.0/0"]  # Default: ["0.0.0.0/0"] - WARNING: allows SSH from anywhere!
+# For better security, use your specific IP:
+# allowed_ssh_ips = ["YOUR.IP.ADDRESS/32"]
+
+# Domain configuration (optional)
+domain_name = ""  # Default: "" (no domain)
+# If you have a domain, set it here:
+# domain_name = "yourdomain.com"
+
+# =============================================================================
+# EXAMPLE SECURE VALUES GENERATION
+# =============================================================================
+# Use these commands to generate secure random values:
+#
+# For passwords and secrets:
+# openssl rand -base64 32
+#
+# For Strapi APP_KEYS (need 4):
+# echo "$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32)"
+#
+# =============================================================================
+
+# =============================================================================
+# COMMON DROPLET SIZES
+# =============================================================================
+# s-1vcpu-1gb    - $6/month  - 1 vCPU, 1GB RAM (minimal)
+# s-2vcpu-2gb    - $12/month - 2 vCPU, 2GB RAM (small)
+# s-2vcpu-4gb    - $24/month - 2 vCPU, 4GB RAM (recommended for dev)
+# s-4vcpu-8gb    - $48/month - 4 vCPU, 8GB RAM (production)
+# s-8vcpu-16gb   - $96/month - 8 vCPU, 16GB RAM (high traffic)
+#
+# =============================================================================
+
+# =============================================================================
+# COMMON REGIONS
+# =============================================================================
+# nyc1, nyc3     - New York
+# sfo3           - San Francisco  
+# tor1           - Toronto
+# lon1           - London
+# fra1           - Frankfurt
+# sgp1           - Singapore
+# blr1           - Bangalore
+# ============================================================================= 
