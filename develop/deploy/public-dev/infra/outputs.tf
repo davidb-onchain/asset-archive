@@ -91,7 +91,7 @@ output "domain_record_fqdn" {
 
 output "project_id" {
   description = "DigitalOcean project ID"
-  value       = digitalocean_project.main.id
+  value       = data.digitalocean_project.main.id
 }
 
 output "project_name" {

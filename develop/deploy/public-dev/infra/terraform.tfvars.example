@@ -32,6 +32,7 @@ encryption_key   = "your_encryption_key_here"
 
 # Project configuration
 project_name = "asset-archive"  # Default: "asset-archive"
+project_id   = "d2c0a376-79b7-4091-a1fa-0c82bca6a82a"  # Default: your project ID
 environment  = "dev"            # Default: "dev"
 region       = "nyc3"           # Default: "nyc3"
 

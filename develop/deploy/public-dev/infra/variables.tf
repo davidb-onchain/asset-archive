@@ -30,6 +30,12 @@ variable "project_name" {
   default     = "asset-archive"
 }
 
+variable "project_id" {
+  description = "DigitalOcean Project ID to assign resources to"
+  type        = string
+  default     = "d2c0a376-79b7-4091-a1fa-0c82bca6a82a"
+}
+
 variable "environment" {
   description = "Environment name (dev, staging, prod)"
   type        = string

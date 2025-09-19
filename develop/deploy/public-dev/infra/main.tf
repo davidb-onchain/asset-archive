@@ -175,15 +175,17 @@ resource "digitalocean_record" "app" {
 # PROJECT ORGANIZATION
 # =============================================================================
 
-# DigitalOcean Project for organization
-resource "digitalocean_project" "main" {
-  name        = "${var.project_name}-${var.environment}"
-  description = "Asset Archive ${var.environment} environment"
-  purpose     = "Web Application"
-  environment = title(var.environment)
+# Get existing DigitalOcean Project
+data "digitalocean_project" "main" {
+  id = var.project_id
+}
 
+# Assign resources to the existing project
+resource "digitalocean_project_resources" "main" {
+  project = data.digitalocean_project.main.id
   resources = [
     digitalocean_droplet.app.urn,
-    digitalocean_vpc.main.urn
+    digitalocean_vpc.main.urn,
+    digitalocean_firewall.web.urn
   ]
 } 
