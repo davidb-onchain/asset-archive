@@ -1,0 +1,172 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'services/**'
+      - 'docker-compose.yml'
+      - '.github/workflows/build-images.yml'
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'services/**'
+      - 'docker-compose.yml'
+      - '.github/workflows/build-images.yml'
+  workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: 'Force rebuild all images'
+        required: false
+        default: 'false'
+        type: boolean
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: ghcr.io/${{ github.repository_owner }}/asset-archive
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      cms-changed: ${{ steps.changes.outputs.cms }}
+      frontend-changed: ${{ steps.changes.outputs.frontend }}
+      any-changed: ${{ steps.changes.outputs.cms == 'true' || steps.changes.outputs.frontend == 'true' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            cms:
+              - 'services/cms/**'
+              - 'docker-compose.yml'
+            frontend:
+              - 'services/frontend/**'
+              - 'docker-compose.yml'
+
+  build-cms:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.cms-changed == 'true' || github.event.inputs.force_rebuild == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE_PREFIX }}-cms
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push CMS image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./services/cms/apps/cms
+          file: ./services/cms/apps/cms/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64,linux/arm64
+
+  build-frontend:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.frontend-changed == 'true' || github.event.inputs.force_rebuild == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE_PREFIX }}-frontend
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push Frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./services/frontend/apps/frontend
+          file: ./services/frontend/apps/frontend/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64,linux/arm64
+          build-args: |
+            NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
+
+  summary:
+    needs: [detect-changes, build-cms, build-frontend]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Job Summary
+        run: |
+          echo "## Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Changes Detected:" >> $GITHUB_STEP_SUMMARY
+          echo "- **CMS Changed**: ${{ needs.detect-changes.outputs.cms-changed }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Frontend Changed**: ${{ needs.detect-changes.outputs.frontend-changed }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Build Results:" >> $GITHUB_STEP_SUMMARY
+          echo "- **CMS Build**: ${{ needs.build-cms.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Frontend Build**: ${{ needs.build-frontend.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Images Available:" >> $GITHUB_STEP_SUMMARY
+          if [[ "${{ needs.build-cms.result }}" == "success" ]]; then
+            echo "- \`${{ env.IMAGE_PREFIX }}-cms:${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [[ "${{ needs.build-frontend.result }}" == "success" ]]; then
+            echo "- \`${{ env.IMAGE_PREFIX }}-frontend:${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Images are published to: [GitHub Container Registry](https://github.com/${{ github.repository_owner }}/asset-archive/pkgs/container/asset-archive-cms)" >> $GITHUB_STEP_SUMMARY 
