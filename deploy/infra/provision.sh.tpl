@@ -278,6 +278,54 @@ systemctl enable asset-archive.service
 echo "✅ System service configured"
 
 # =============================================================================
+# CONTAINER UPDATE SCRIPT
+# =============================================================================
+
+echo "📝 Creating container update script..."
+
+# Create update script for future deployments
+cat > /opt/asset-archive/update-containers.sh << 'EOF'
+#!/bin/bash
+set -euo pipefail
+
+echo "🔄 Updating containers with new images..."
+cd /opt/asset-archive
+
+# Update docker-compose.yml with new image tags
+if [ ! -z "$${CMS_IMAGE:-}" ]; then
+    sed -i "s|image: .*asset-archive-cms.*|image: $${CMS_IMAGE}|g" docker-compose.yml
+    echo "✅ Updated CMS image to: $${CMS_IMAGE}"
+fi
+
+if [ ! -z "$${FRONTEND_IMAGE:-}" ]; then
+    sed -i "s|image: .*asset-archive-frontend.*|image: $${FRONTEND_IMAGE}|g" docker-compose.yml
+    echo "✅ Updated Frontend image to: $${FRONTEND_IMAGE}"
+fi
+
+# Pull new images
+echo "📥 Pulling new container images..."
+docker compose pull
+
+# Gracefully restart services (preserves volumes)
+echo "🔄 Restarting containers..."
+docker compose up -d --force-recreate --no-deps strapi frontend
+
+# Wait for services to be healthy
+echo "⏳ Waiting for services to be ready..."
+timeout 60 bash -c 'until docker compose exec -T postgres pg_isready -U ${postgres_user} -d ${postgres_db}; do sleep 2; done' || echo "⚠️ Database health check timeout"
+timeout 120 bash -c 'until curl -f http://localhost:1337/admin; do sleep 5; done' || echo "⚠️ Strapi health check timeout"
+timeout 120 bash -c 'until curl -f http://localhost:3000; do sleep 5; done' || echo "⚠️ Frontend health check timeout"
+
+echo "✅ Container update complete!"
+docker compose ps
+EOF
+
+# Make script executable
+chmod +x /opt/asset-archive/update-containers.sh
+
+echo "✅ Container update script created"
+
+# =============================================================================
 # FIREWALL CONFIGURATION (UFW)
 # =============================================================================
 

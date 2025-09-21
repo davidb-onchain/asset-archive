@@ -70,6 +70,12 @@ variable "ssh_key_name" {
   default     = "asset-archive-key"
 }
 
+variable "ssh_private_key" {
+  description = "SSH private key content for connecting to droplet"
+  type        = string
+  sensitive   = true
+}
+
 # =============================================================================
 # CONTAINER REGISTRY
 # =============================================================================
