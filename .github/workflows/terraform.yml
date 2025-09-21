@@ -1,5 +1,10 @@
 name: Terraform Plan & Apply
 
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 on:
   pull_request:
     branches:
@@ -53,25 +58,36 @@ jobs:
         TF_VAR_spaces_access_key_id: ${{ secrets.SPACES_ACCESS_KEY_ID }}
         TF_VAR_spaces_secret_access_key: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
         TF_VAR_ssh_public_key: ${{ secrets.SSH_PUBLIC_KEY }}
-      run: terraform -chdir=deploy/infra plan -no-color -out=tfplan
+      run: |
+        terraform -chdir=deploy/infra plan -no-color -out=tfplan
+        terraform -chdir=deploy/infra show -no-color tfplan > deploy/infra/plan.txt
 
-    - name: Add Plan to PR
+    - name: Add Plan to PR (or Job Summary)
       uses: actions/github-script@v6
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const output = `#### Terraform Plan 📖\`
-          \`\`\`\n
-          ${{ steps.plan.outputs.stdout }}
-          \`\`\`
-          *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+          const fs = require('fs');
+          const path = 'deploy/infra/plan.txt';
+          const plan = fs.readFileSync(path, 'utf8');
 
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: output
-          })
+          const body = `#### Terraform Plan 📖\n\n\`\`\`\n${plan}\n\`\`\`\n*Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+          try {
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body,
+            });
+          } catch (err) {
+            core.warning(`Unable to comment on PR (likely permissions on forks). Falling back to job summary. Error: ${err.message}`);
+            await core.summary
+              .addHeading('Terraform Plan')
+              .addCodeBlock(plan, 'hcl')
+              .addRaw(`\nPushed by: @${{ github.actor }} | Action: \`${{ github.event_name }}\``)
+              .write();
+          }
 
   apply:
     name: 'Terraform Apply'
