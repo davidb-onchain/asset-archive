@@ -3,7 +3,7 @@ terraform {
     # DigitalOcean Spaces configuration for Terraform state
     endpoint                    = "https://nyc3.digitaloceanspaces.com"
     region                      = "us-east-1" # Required but not used by DO Spaces
-    bucket                      = "aa-secrets-key"
+    bucket                      = "aa-secrets-space"
     key                         = "terraform/public-dev/terraform.tfstate"
     skip_credentials_validation = true
     skip_metadata_api_check     = true
