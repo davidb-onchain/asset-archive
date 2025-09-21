@@ -101,7 +101,7 @@ resource "digitalocean_firewall" "web" {
 # Main application droplet
 resource "digitalocean_droplet" "app" {
   image    = var.droplet_image
-  name     = "${var.project_name}-${var.environment}-app"
+  name     = "${var.project_name}-${var.environment}-app-v2"
   region   = var.region
   size     = var.droplet_size
   vpc_uuid = digitalocean_vpc.main.id
