@@ -147,6 +147,13 @@ resource "digitalocean_droplet" "app" {
 
   # Ensure firewall is created first
   depends_on = [digitalocean_firewall.web]
+
+  # This provisioner pauses Terraform to allow the user_data script to complete.
+  # It is a workaround for the race condition where the null_resource tries
+  # to connect before the provisioning script has finished.
+  provisioner "local-exec" {
+    command = "sleep 60"
+  }
 }
 
 # =============================================================================
