@@ -100,7 +100,7 @@ resource "digitalocean_firewall" "web" {
 
 # Main application droplet
 resource "digitalocean_droplet" "app" {
-  image    = "ubuntu-22-10-x64"
+  image    = var.droplet_image
   name     = "${var.project_name}-${var.environment}-app"
   region   = var.region
   size     = var.droplet_size
