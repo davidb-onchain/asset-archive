@@ -1,10 +1,10 @@
 # =============================================================================
-# DATA SOURCES
+# SSH KEY
 # =============================================================================
 
-# Get existing SSH key
-data "digitalocean_ssh_key" "main" {
-  name = var.ssh_key_name
+resource "digitalocean_ssh_key" "main" {
+  name       = var.ssh_key_name
+  public_key = var.ssh_public_key
 }
 
 # =============================================================================
@@ -93,7 +93,7 @@ resource "digitalocean_droplet" "app" {
   size     = var.droplet_size
   vpc_uuid = digitalocean_vpc.main.id
 
-  ssh_keys = [data.digitalocean_ssh_key.main.id]
+  ssh_keys = [digitalocean_ssh_key.main.id]
 
   # User data script for initial setup
   user_data = templatefile("${path.module}/provision.sh.tpl", {

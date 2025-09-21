@@ -165,4 +165,15 @@ variable "domain_name" {
   description = "Domain name for the application (optional)"
   type        = string
   default     = ""
+}
+
+# =============================================================================
+# SSH KEY INPUTS
+# =============================================================================
+
+variable "ssh_public_key" {
+  description = "Public key content for DigitalOcean SSH key"
+  type        = string
+  sensitive   = true
+  default     = ""
 } 
