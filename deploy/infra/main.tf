@@ -177,7 +177,6 @@ data "digitalocean_project" "main" {
 resource "digitalocean_project_resources" "main" {
   project = data.digitalocean_project.main.id
   resources = [
-    digitalocean_droplet.app.urn,
-    digitalocean_vpc.main.urn
+    digitalocean_droplet.app.urn
   ]
 } 
