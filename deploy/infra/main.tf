@@ -179,4 +179,41 @@ resource "digitalocean_project_resources" "main" {
   resources = [
     digitalocean_droplet.app.urn
   ]
+}
+
+# =============================================================================
+# CONTAINER UPDATE AUTOMATION
+# =============================================================================
+
+# Container update trigger - runs when image tags change
+resource "null_resource" "container_update" {
+  # Trigger when container images change
+  triggers = {
+    cms_image      = var.container_registry_images.cms
+    frontend_image = var.container_registry_images.frontend
+    droplet_id     = digitalocean_droplet.app.id
+  }
+
+  # SSH connection to the droplet
+  connection {
+    type        = "ssh"
+    user        = "root"
+    host        = digitalocean_droplet.app.ipv4_address
+    private_key = var.ssh_private_key
+    timeout     = "5m"
+  }
+
+  # Execute container update script
+  provisioner "remote-exec" {
+    inline = [
+      "echo '🚀 Starting automated container update...'",
+      "cd /opt/asset-archive",
+      "export CMS_IMAGE='${var.container_registry_images.cms}'",
+      "export FRONTEND_IMAGE='${var.container_registry_images.frontend}'",
+      "./update-containers.sh"
+    ]
+  }
+
+  # Ensure droplet is ready before attempting updates
+  depends_on = [digitalocean_droplet.app]
 } 

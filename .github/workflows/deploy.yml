@@ -1,0 +1,102 @@
+name: Deploy Containers
+
+permissions:
+  contents: read
+
+on:
+  workflow_run:
+    workflows: ["Build and Push Docker Images"]
+    types:
+      - completed
+    branches:
+      - develop
+  workflow_dispatch:
+    inputs:
+      cms_image:
+        description: 'CMS image tag to deploy'
+        required: false
+        type: string
+      frontend_image:
+        description: 'Frontend image tag to deploy'
+        required: false
+        type: string
+
+jobs:
+  deploy:
+    name: 'Deploy to Development'
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch'
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.2.9
+
+    - name: Determine Image Tags
+      id: images
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          # Manual trigger - use provided images or defaults
+          CMS_IMAGE="${{ github.event.inputs.cms_image }}"
+          FRONTEND_IMAGE="${{ github.event.inputs.frontend_image }}"
+          
+          if [ -z "$CMS_IMAGE" ]; then
+            CMS_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-cms:${{ github.ref_name }}"
+          fi
+          
+          if [ -z "$FRONTEND_IMAGE" ]; then
+            FRONTEND_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-frontend:${{ github.ref_name }}"
+          fi
+        else
+          # Automatic trigger - use latest images from the build
+          SHA="${{ github.event.workflow_run.head_sha }}"
+          SHORT_SHA=${SHA:0:7}
+          CMS_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-cms:${{ github.ref_name }}-${SHORT_SHA}"
+          FRONTEND_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-frontend:${{ github.ref_name }}-${SHORT_SHA}"
+        fi
+        
+        echo "cms_image=${CMS_IMAGE}" >> $GITHUB_OUTPUT
+        echo "frontend_image=${FRONTEND_IMAGE}" >> $GITHUB_OUTPUT
+        echo "Deploying CMS: ${CMS_IMAGE}"
+        echo "Deploying Frontend: ${FRONTEND_IMAGE}"
+
+    - name: Terraform Init
+      env:
+        DO_PAT: ${{ secrets.DO_PAT }}
+        SPACES_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_KEY_ID }}
+        SPACES_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
+      run: |
+        terraform -chdir=deploy/infra init \
+          -backend-config="access_key=$SPACES_ACCESS_KEY_ID" \
+          -backend-config="secret_key=$SPACES_SECRET_ACCESS_KEY"
+
+    - name: Deploy Container Updates
+      env:
+        DO_PAT: ${{ secrets.DO_PAT }}
+        SPACES_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_KEY_ID }}
+        SPACES_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
+        TF_VAR_do_token: ${{ secrets.DO_PAT }}
+        TF_VAR_spaces_access_key_id: ${{ secrets.SPACES_ACCESS_KEY_ID }}
+        TF_VAR_spaces_secret_access_key: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
+        TF_VAR_ssh_public_key: ${{ secrets.SSH_PUBLIC_KEY }}
+        TF_VAR_ssh_key_name: ${{ secrets.SSH_KEY_NAME }}
+        TF_VAR_ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+      run: |
+        terraform -chdir=deploy/infra apply -auto-approve \
+          -var="container_registry_images={cms=\"${{ steps.images.outputs.cms_image }}\",frontend=\"${{ steps.images.outputs.frontend_image }}\"}"
+
+    - name: Deployment Summary
+      run: |
+        echo "## 🚀 Deployment Complete" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Deployed Images:" >> $GITHUB_STEP_SUMMARY
+        echo "- **CMS**: \`${{ steps.images.outputs.cms_image }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "- **Frontend**: \`${{ steps.images.outputs.frontend_image }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Environment:" >> $GITHUB_STEP_SUMMARY
+        echo "- **Branch**: \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "- **Commit**: \`${{ github.event.workflow_run.head_sha || github.sha }}\`" >> $GITHUB_STEP_SUMMARY 

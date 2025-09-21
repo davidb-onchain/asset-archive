@@ -1,0 +1,3 @@
+# Required Python packages for the GitHub secret sync script
+requests
+pynacl 
