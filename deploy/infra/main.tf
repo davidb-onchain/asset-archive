@@ -2,9 +2,8 @@
 # SSH KEY
 # =============================================================================
 
-resource "digitalocean_ssh_key" "main" {
-  name       = var.ssh_key_name
-  public_key = var.ssh_public_key
+data "digitalocean_ssh_key" "main" {
+  name = var.ssh_key_name
 }
 
 # =============================================================================
@@ -18,6 +17,15 @@ resource "digitalocean_vpc" "main" {
   ip_range = "10.10.0.0/16"
 }
 
+# Ensure tags exist before assigning them to resources
+resource "digitalocean_tag" "project" {
+  name = "project:${var.project_name}"
+}
+
+resource "digitalocean_tag" "environment" {
+  name = "environment:${var.environment}"
+}
+
 # Firewall rules
 resource "digitalocean_firewall" "web" {
   name = "${var.project_name}-${var.environment}-web"
@@ -25,6 +33,11 @@ resource "digitalocean_firewall" "web" {
   tags = [
     "project:${var.project_name}",
     "environment:${var.environment}"
+  ]
+
+  depends_on = [
+    digitalocean_tag.project,
+    digitalocean_tag.environment
   ]
 
   # SSH access
@@ -93,7 +106,7 @@ resource "digitalocean_droplet" "app" {
   size     = var.droplet_size
   vpc_uuid = digitalocean_vpc.main.id
 
-  ssh_keys = [digitalocean_ssh_key.main.id]
+  ssh_keys = [data.digitalocean_ssh_key.main.id]
 
   # User data script for initial setup
   user_data = templatefile("${path.module}/provision.sh.tpl", {
