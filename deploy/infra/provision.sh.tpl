@@ -11,6 +11,9 @@
 
 set -euo pipefail  # Exit on error, undefined vars, pipe failures
 
+# Set non-interactive mode for all operations
+export DEBIAN_FRONTEND=noninteractive
+
 # Logging setup
 exec 1> >(tee -a /var/log/provision.log)
 exec 2> >(tee -a /var/log/provision.log >&2)
@@ -23,9 +26,14 @@ echo "==================================================================="
 # SYSTEM UPDATES AND DEPENDENCIES
 # =============================================================================
 
+# Set non-interactive mode for all apt operations
+export DEBIAN_FRONTEND=noninteractive
+
 echo "📦 Updating system packages..."
 apt-get update
-apt-get upgrade -y
+
+echo "📦 Upgrading system packages (non-interactive)..."
+apt-get upgrade -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
 echo "📦 Installing required packages..."
 apt-get install -y \
