@@ -110,7 +110,7 @@ resource "digitalocean_droplet" "app" {
     # DigitalOcean Spaces credentials
     spaces_access_key_id     = var.spaces_access_key_id
     spaces_secret_access_key = var.spaces_secret_access_key
-    spaces_region           = var.region
+    spaces_region            = var.region
 
     # Container images
     cms_image      = var.container_registry_images.cms
