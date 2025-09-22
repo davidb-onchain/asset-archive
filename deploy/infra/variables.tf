@@ -70,27 +70,14 @@ variable "ssh_key_name" {
   default     = "asset-archive-key"
 }
 
-variable "ssh_private_key" {
-  description = "SSH private key content for connecting to droplet"
-  type        = string
-  sensitive   = true
-}
+# ssh_private_key variable removed - no longer needed since container updates
+# are handled by GitHub Actions via direct SSH, not Terraform remote-exec
 
 # =============================================================================
 # CONTAINER REGISTRY
 # =============================================================================
-
-variable "container_registry_images" {
-  description = "Container images to deploy"
-  type = object({
-    cms      = string
-    frontend = string
-  })
-  default = {
-    cms      = "ghcr.io/davidb-onchain/asset-archive-cms:develop-137d3d6"
-    frontend = "ghcr.io/davidb-onchain/asset-archive-frontend:develop-137d3d6"
-  }
-}
+# Note: Container image variables removed - images are now managed by GitHub Actions
+# via direct SSH deployment, providing better separation of concerns
 
 # =============================================================================
 # APPLICATION CONFIGURATION

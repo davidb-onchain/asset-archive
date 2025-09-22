@@ -64,8 +64,9 @@ The CI/CD pipeline is composed of three interconnected workflows:
     - **Trigger**: On successful completion of the Build Workflow on the `develop` branch.
     - **Action**:
         - Determines the tags of the newly built images.
-        - Runs `terraform apply`, passing the new image tags as variables.
-        - This triggers the `null_resource` for container updates.
+        - Uses DigitalOcean API to get the droplet IP address.
+        - Connects directly to the droplet via SSH.
+        - Updates container images and restarts services without Terraform involvement.
 
 3.  **Infrastructure Workflow (`terraform.yml`)**:
     - **Trigger**: On push to `develop` with changes in `deploy/infra/**`.
@@ -76,20 +77,28 @@ The CI/CD pipeline is composed of three interconnected workflows:
 
 1.  **Code Change** → A developer pushes a code change to the `develop` branch.
 2.  **Build Workflow** → New container images are built and pushed to GHCR.
-3.  **Deploy Workflow** → Automatically triggers and runs `terraform apply` with the new image tags.
-4.  **Terraform** → Detects that the container image variables have changed and triggers the `null_resource.container_update`. It then SSHes into the Droplet.
-5.  **Update Script** → An `update-containers.sh` script on the Droplet is executed, which:
-    - Pulls the new images from GHCR.
-    - Restarts the relevant containers using `docker compose up -d --force-recreate`.
-    - Preserves the persistent data in the Docker volumes.
+3.  **Deploy Workflow** → Automatically triggers and:
+    - Uses DigitalOcean API to find the droplet IP address.
+    - Connects directly to the droplet via SSH.
+    - Updates the `docker-compose.yml` file with new image tags.
+    - Pulls new images and restarts containers using `docker compose up -d --force-recreate`.
+    - Preserves persistent data in Docker volumes.
+    - Performs health checks to ensure services are running.
+
+**Key Architecture Decision**: Container deployments are handled by **GitHub Actions via direct SSH**, not Terraform. This provides:
+- **Faster deployments** (no Terraform state locking or remote-exec delays)
+- **Clear separation of concerns** (Terraform for infrastructure, GitHub Actions for application deployment)
+- **Better error handling and logging** through GitHub Actions
+- **No more hanging deployments** due to cloud-init or remote-exec issues
 
 ## Current Status
 
 - **Infrastructure**: The Terraform setup for the development environment is complete and stable.
 - **Provisioning**: The `cloud-init` script successfully provisions a new Droplet with all necessary dependencies and services.
 - **Container Builds**: The GitHub Actions workflow to build and push container images is functional.
-- **Automated Deployments**: A complete, automated deployment pipeline for application updates is implemented and documented.
+- **Automated Deployments**: A complete, automated deployment pipeline for application updates using GitHub Actions and direct SSH (no longer dependent on Terraform remote-exec).
 - **Data Persistence**: The deployment strategy ensures that database data and file uploads are preserved across application updates.
+- **Architecture Optimization**: Moved from Terraform-based container updates to GitHub Actions direct SSH deployment, eliminating hanging deployments and improving speed.
 - **Documentation**: `workflow.md` has been updated with a comprehensive overview of the project's architecture, philosophy, and deployment processes.
 
 ### Recent Accomplishments (Summary of Today's Session)
@@ -100,8 +109,9 @@ The CI/CD pipeline is composed of three interconnected workflows:
 - Resolved numerous errors related to Terraform state, provider versions, resource attributes, and GitHub Actions permissions.
 - Created and refined a `cloud-init` provisioning script to automate Droplet setup, including Docker installation and service startup.
 - Fixed a critical bug where the provisioning script would hang due to interactive prompts during package upgrades.
-- Designed and implemented a zero-downtime, Terraform-based container update strategy that preserves data.
-- Created a new deployment workflow (`deploy.yml`) that automatically deploys new container images after they are built.
+- Designed and implemented a zero-downtime container update strategy that preserves data.
+- Created a new deployment workflow (`deploy.yml`) that automatically deploys new container images via direct SSH.
+- **Major Architecture Improvement**: Refactored from Terraform remote-exec to GitHub Actions direct SSH for container deployments, solving hanging deployment issues and improving performance.
 - Authored comprehensive documentation in `workflow.md` detailing the project's architecture, philosophy, and CI/CD processes.
 
 ## Next Steps & Future Work
@@ -114,7 +124,7 @@ The CI/CD pipeline is composed of three interconnected workflows:
     3.  Verify that the `build-images.yml` workflow runs and creates new images.
     4.  Verify that the `deploy.yml` workflow triggers and successfully updates the running containers on the Droplet.
     5.  Confirm that the application is accessible and reflects the code change, with all previous data intact.
-- **Secure Secrets**: Add the `SSH_PRIVATE_KEY` to GitHub Actions secrets to enable the deployment workflow. Review all other secrets for correctness.
+- **Verify SSH Deployment**: Ensure the `SSH_PRIVATE_KEY` GitHub Actions secret is properly configured for the new direct SSH deployment workflow.
 
 ### Long-Term Goals
 

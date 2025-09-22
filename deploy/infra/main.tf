@@ -184,42 +184,6 @@ resource "digitalocean_project_resources" "main" {
 # =============================================================================
 # CONTAINER UPDATE AUTOMATION
 # =============================================================================
-
-# Container update trigger - runs when image tags change
-resource "null_resource" "container_update" {
-  # Trigger when container images change
-  triggers = {
-    cms_image      = var.container_registry_images.cms
-    frontend_image = var.container_registry_images.frontend
-    droplet_id     = digitalocean_droplet.app.id
-  }
-
-  # SSH connection to the droplet
-  connection {
-    type        = "ssh"
-    user        = "root"
-    host        = digitalocean_droplet.app.ipv4_address
-    private_key = var.ssh_private_key
-    timeout     = "10m"
-  }
-
-  # Execute container update script with readiness checks
-  provisioner "remote-exec" {
-    inline = [
-      "echo '🚀 Starting automated container update...'",
-      # Wait for cloud-init to finish with timeout
-      "timeout 600 cloud-init status --wait || true",
-      # Wait for app directory to exist with timeout
-      "for i in $(seq 1 120); do [ -d /opt/asset-archive ] && break; echo 'Waiting for /opt/asset-archive...'; sleep 5; done",
-      # Wait for script to exist and be executable with timeout
-      "for i in $(seq 1 120); do [ -x /opt/asset-archive/update-containers.sh ] && break; echo 'Waiting for update-containers.sh...'; sleep 5; done",
-      # Export images and run update
-      "export CMS_IMAGE='${var.container_registry_images.cms}'",
-      "export FRONTEND_IMAGE='${var.container_registry_images.frontend}'",
-      "cd /opt/asset-archive && ./update-containers.sh || true"
-    ]
-  }
-
-  # Ensure droplet is ready before attempting updates
-  depends_on = [digitalocean_droplet.app]
-} 
+# Note: Container updates are now handled by GitHub Actions via direct SSH
+# This provides faster deployments and better separation of concerns between
+# infrastructure provisioning (Terraform) and application deployment (CI/CD) 
