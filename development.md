@@ -23,6 +23,7 @@ The Asset Archive project is a full-stack application designed to archive, manag
 - **Automated Deployment Pipeline**: Code changes automatically flow through build, test, and deployment stages.
 - **Data Persistence**: Critical data (database, uploads) is preserved across deployments using persistent Docker volumes.
 - **Zero-Downtime Updates**: Application updates are performed by gracefully restarting containers without taking down the entire system.
+- **Direct SSH Deployment**: Container deployments bypass Terraform's remote-exec limitations by using GitHub Actions with direct SSH connections for faster, more reliable updates.
 
 ## System Architecture
 
@@ -50,17 +51,17 @@ The Asset Archive project is a full-stack application designed to archive, manag
 
 ### CI/CD Pipeline (GitHub Actions)
 
-The CI/CD pipeline is composed of three interconnected workflows:
+The CI/CD pipeline is composed of four interconnected workflows:
 
 1.  **Build Workflow (`build-images.yml`)**:
-    - **Trigger**: On push to `develop` or `main` with changes in `services/**`.
+    - **Trigger**: On push to `develop` with changes in `services/**`.
     - **Action**:
         - Detects which service's code has changed (CMS or Frontend).
         - Builds new Docker images for the changed services.
         - Tags images with the branch name and commit SHA for traceability.
         - Pushes the new images to GitHub Container Registry (GHCR).
 
-2.  **Deployment Workflow (`deploy.yml`)**:
+2.  **Automatic Deployment Workflow (`deploy.yml`)**:
     - **Trigger**: On successful completion of the Build Workflow on the `develop` branch.
     - **Action**:
         - Determines the tags of the newly built images.
@@ -68,7 +69,14 @@ The CI/CD pipeline is composed of three interconnected workflows:
         - Connects directly to the droplet via SSH.
         - Updates container images and restarts services without Terraform involvement.
 
-3.  **Infrastructure Workflow (`terraform.yml`)**:
+3.  **Manual Deployment Workflow (`deploy-manual.yml`)**:
+    - **Trigger**: Manual execution via GitHub Actions UI ("Run workflow" button).
+    - **Action**:
+        - Allows manual deployment with optional custom image tags.
+        - Uses the same direct SSH deployment process as automatic deployment.
+        - Provides immediate deployment capability without waiting for code changes.
+
+4.  **Infrastructure Workflow (`terraform.yml`)**:
     - **Trigger**: On push to `develop` with changes in `deploy/infra/**`.
     - **Action**: Runs `terraform apply` to create, update, or destroy infrastructure resources.
     - **PR Integration**: Runs `terraform plan` on pull requests targeting `develop` and posts the plan as a comment.
@@ -90,15 +98,20 @@ The CI/CD pipeline is composed of three interconnected workflows:
 - **Clear separation of concerns** (Terraform for infrastructure, GitHub Actions for application deployment)
 - **Better error handling and logging** through GitHub Actions
 - **No more hanging deployments** due to cloud-init or remote-exec issues
+- **Manual deployment capability** via GitHub Actions UI for immediate updates and testing
+- **Reliable SSH connections** using proper temporary key files instead of process substitution
 
 ## Current Status
 
+- **Branch Strategy**: `develop` is now the default branch for active development and deployment. The `main` branch will be retired in favor of using `develop` for the primary development workflow.
 - **Infrastructure**: The Terraform setup for the development environment is complete and stable.
 - **Provisioning**: The `cloud-init` script successfully provisions a new Droplet with all necessary dependencies and services.
 - **Container Builds**: The GitHub Actions workflow to build and push container images is functional.
 - **Automated Deployments**: A complete, automated deployment pipeline for application updates using GitHub Actions and direct SSH (no longer dependent on Terraform remote-exec).
+- **Manual Deployments**: A working manual deployment workflow accessible via GitHub Actions UI for immediate testing and updates.
 - **Data Persistence**: The deployment strategy ensures that database data and file uploads are preserved across application updates.
 - **Architecture Optimization**: Moved from Terraform-based container updates to GitHub Actions direct SSH deployment, eliminating hanging deployments and improving speed.
+- **SSH Connection Reliability**: Fixed critical SSH connection issues by using proper temporary key files, ensuring deployments connect immediately instead of failing repeatedly.
 - **Documentation**: `workflow.md` has been updated with a comprehensive overview of the project's architecture, philosophy, and deployment processes.
 
 ### Recent Accomplishments (Summary of Today's Session)
@@ -112,6 +125,9 @@ The CI/CD pipeline is composed of three interconnected workflows:
 - Designed and implemented a zero-downtime container update strategy that preserves data.
 - Created a new deployment workflow (`deploy.yml`) that automatically deploys new container images via direct SSH.
 - **Major Architecture Improvement**: Refactored from Terraform remote-exec to GitHub Actions direct SSH for container deployments, solving hanging deployment issues and improving performance.
+- **SSH Connection Bug Fix**: Identified and resolved critical SSH private key handling issue that caused 30 failed connection attempts. Fixed by using proper temporary key files instead of unreliable process substitution.
+- **Manual Deployment Implementation**: Created a working manual deployment workflow accessible via GitHub Actions UI for immediate testing and deployment capabilities.
+- **Branch Strategy Optimization**: Changed repository default branch from `main` to `develop` to align with active development workflow and enable GitHub Actions UI features.
 - Authored comprehensive documentation in `workflow.md` detailing the project's architecture, philosophy, and CI/CD processes.
 
 ## Next Steps & Future Work
@@ -124,12 +140,14 @@ The CI/CD pipeline is composed of three interconnected workflows:
     3.  Verify that the `build-images.yml` workflow runs and creates new images.
     4.  Verify that the `deploy.yml` workflow triggers and successfully updates the running containers on the Droplet.
     5.  Confirm that the application is accessible and reflects the code change, with all previous data intact.
-- **Verify SSH Deployment**: Ensure the `SSH_PRIVATE_KEY` GitHub Actions secret is properly configured for the new direct SSH deployment workflow.
+- **Clean up repository branches**: Remove or archive old feature branches and finalize the transition away from `main` branch.
+- **Performance monitoring**: Establish baseline metrics for deployment times and system performance with the new direct SSH architecture.
 
 ### Long-Term Goals
 
-- **Production Environment**: Adapt the Terraform configuration and workflows for a production environment (e.g., using the `main` branch, potentially larger Droplet, managed database).
+- **Production Environment**: Create a separate production workflow and infrastructure configuration using a dedicated production branch or environment-specific configuration.
 - **Custom Domain & SSL**: Add configuration for a custom domain and SSL certificates (e.g., using Let's Encrypt).
 - **Database Backups**: Implement a strategy for regular backups of the PostgreSQL database, potentially storing them in DigitalOcean Spaces.
 - **Monitoring & Logging**: Set up a monitoring solution (e.g., DigitalOcean Monitoring, Prometheus/Grafana) to track Droplet performance and container health. Implement centralized logging for easier debugging.
+- **Multi-environment Strategy**: Establish clear patterns for staging/production environments using the proven direct SSH deployment architecture.
 - **User-Facing Documentation**: Create documentation for end-users on how to use the Asset Archive application. 

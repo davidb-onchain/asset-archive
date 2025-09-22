@@ -1,67 +1,43 @@
 name: Deploy Containers
 
-permissions:
-  contents: read
-
 on:
-  workflow_run:
-    workflows: ["Build and Push Docker Images"]
-    types:
-      - completed
-    branches:
-      - develop
   workflow_dispatch:
     inputs:
       cms_image:
-        description: 'CMS image tag to deploy'
+        description: 'CMS image tag to deploy (optional)'
         required: false
         type: string
+        default: 'ghcr.io/davidb-onchain/asset-archive-cms:main-137d3d6'
       frontend_image:
-        description: 'Frontend image tag to deploy'
+        description: 'Frontend image tag to deploy (optional)'
         required: false
         type: string
-  push:
-    branches:
-      - develop
-    paths:
-      - '.github/workflows/deploy.yml'
+        default: 'ghcr.io/davidb-onchain/asset-archive-frontend:main-137d3d6'
+
+permissions:
+  contents: read
 
 jobs:
   deploy:
     name: 'Deploy to Development'
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch'
 
     steps:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.2.9
-
     - name: Determine Image Tags
       id: images
       run: |
-        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-          # Manual trigger - use provided images or defaults
-          CMS_IMAGE="${{ github.event.inputs.cms_image }}"
-          FRONTEND_IMAGE="${{ github.event.inputs.frontend_image }}"
-
-          if [ -z "$CMS_IMAGE" ]; then
-            CMS_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-cms:${{ github.ref_name }}"
-          fi
-
-          if [ -z "$FRONTEND_IMAGE" ]; then
-            FRONTEND_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-frontend:${{ github.ref_name }}"
-          fi
-        else
-          # Automatic trigger - use latest images from the build
-          SHA="${{ github.event.workflow_run.head_sha }}"
-          SHORT_SHA=${SHA:0:7}
-          CMS_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-cms:${{ github.ref_name }}-${SHORT_SHA}"
-          FRONTEND_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-frontend:${{ github.ref_name }}-${SHORT_SHA}"
+        CMS_IMAGE="${{ github.event.inputs.cms_image }}"
+        FRONTEND_IMAGE="${{ github.event.inputs.frontend_image }}"
+        
+        if [ -z "$CMS_IMAGE" ]; then
+          CMS_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-cms:main-137d3d6"
+        fi
+        
+        if [ -z "$FRONTEND_IMAGE" ]; then
+          FRONTEND_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-frontend:main-137d3d6"
         fi
 
         echo "cms_image=${CMS_IMAGE}" >> $GITHUB_OUTPUT
@@ -91,15 +67,26 @@ jobs:
 
     - name: Wait for Droplet to be Ready
       run: |
-        echo "⏳ Waiting for droplet to be accessible via SSH..."
-        for i in $(seq 1 30); do
-          if ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -i <(echo "${{ secrets.SSH_PRIVATE_KEY }}") root@${{ steps.droplet.outputs.droplet_ip }} "echo 'SSH connection successful'" 2>/dev/null; then
-            echo "✅ Droplet is ready"
-            break
-          fi
-          echo "⏳ Attempt $i/30 - waiting for SSH access..."
-          sleep 10
-        done
+        echo "⏳ Testing SSH connection to droplet..."
+        echo "🔗 Connecting to: ${{ steps.droplet.outputs.droplet_ip }}"
+        
+        # Create proper SSH key file
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/ssh_key
+        chmod 600 /tmp/ssh_key
+        
+        # Test SSH connection (should work immediately if droplet is ready)
+        if ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -i /tmp/ssh_key root@${{ steps.droplet.outputs.droplet_ip }} "echo 'SSH connection successful'" 2>/dev/null; then
+          echo "✅ SSH connection successful"
+        else
+          echo "❌ SSH connection failed"
+          echo "Debugging info:"
+          echo "- Droplet IP: ${{ steps.droplet.outputs.droplet_ip }}"
+          echo "- SSH key file created: $(ls -la /tmp/ssh_key)"
+          rm -f /tmp/ssh_key
+          exit 1
+        fi
+        
+        rm -f /tmp/ssh_key
 
     - name: Deploy Container Updates via SSH
       run: |
@@ -158,7 +145,7 @@ jobs:
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### Environment:" >> $GITHUB_STEP_SUMMARY
         echo "- **Branch**: \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
-        echo "- **Commit**: \`${{ github.event.workflow_run.head_sha || github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "- **Commit**: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
         echo "- **Droplet IP**: \`${{ steps.droplet.outputs.droplet_ip }}\`" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### Access URLs:" >> $GITHUB_STEP_SUMMARY

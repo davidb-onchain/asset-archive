@@ -8,13 +8,13 @@ permissions:
 on:
   pull_request:
     branches:
-      - develop
+      - main
     paths:
       - 'deploy/infra/**'
       - '.github/workflows/terraform.yml'
   push:
     branches:
-      - develop
+      - main
     paths:
       - 'deploy/infra/**'
       - '.github/workflows/terraform.yml'
@@ -99,7 +99,7 @@ jobs:
   apply:
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')
 
     steps:
     - name: Checkout
