@@ -114,9 +114,9 @@ output "region" {
 # =============================================================================
 
 output "container_images" {
-  description = "Container images being deployed"
+  description = "Container images used in initial provisioning (actual deployment managed by GitHub Actions)"
   value = {
-    cms      = var.container_registry_images.cms
-    frontend = var.container_registry_images.frontend
+    cms      = "ghcr.io/davidb-onchain/asset-archive-cms:develop-137d3d6"
+    frontend = "ghcr.io/davidb-onchain/asset-archive-frontend:develop-137d3d6"
   }
 } 
