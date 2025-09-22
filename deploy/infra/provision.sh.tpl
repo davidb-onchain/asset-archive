@@ -238,7 +238,7 @@ echo "🔍 Performing health checks..."
 
 # Wait for services to be ready
 echo "⏳ Waiting for database to be ready..."
-timeout 60 bash -c 'until docker compose exec -T postgres pg_isready -U ${postgres_user} -d ${postgres_db}; do sleep 2; done'
+timeout 60 bash -c 'until docker compose exec -T postgres pg_isready -U strapi -d strapi; do sleep 2; done'
 
 echo "⏳ Waiting for Strapi to be ready..."
 timeout 120 bash -c 'until curl -f http://localhost:1337/admin; do sleep 5; done'
@@ -312,7 +312,7 @@ docker compose up -d --force-recreate --no-deps strapi frontend
 
 # Wait for services to be healthy
 echo "⏳ Waiting for services to be ready..."
-timeout 60 bash -c 'until docker compose exec -T postgres pg_isready -U ${postgres_user} -d ${postgres_db}; do sleep 2; done' || echo "⚠️ Database health check timeout"
+timeout 60 bash -c 'until docker compose exec -T postgres pg_isready -U strapi -d strapi; do sleep 2; done' || echo "⚠️ Database health check timeout"
 timeout 120 bash -c 'until curl -f http://localhost:1337/admin; do sleep 5; done' || echo "⚠️ Strapi health check timeout"
 timeout 120 bash -c 'until curl -f http://localhost:3000; do sleep 5; done' || echo "⚠️ Frontend health check timeout"
 
