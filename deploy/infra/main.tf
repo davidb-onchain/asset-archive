@@ -100,7 +100,7 @@ resource "digitalocean_firewall" "web" {
 
 # Main application droplet
 resource "digitalocean_droplet" "app" {
-  image    = "ubuntu-23-10-x64"
+  image    = var.droplet_image
   name     = "${var.project_name}-${var.environment}-app"
   region   = var.region
   size     = var.droplet_size
@@ -200,17 +200,23 @@ resource "null_resource" "container_update" {
     user        = "root"
     host        = digitalocean_droplet.app.ipv4_address
     private_key = var.ssh_private_key
-    timeout     = "5m"
+    timeout     = "10m"
   }
 
-  # Execute container update script
+  # Execute container update script with readiness checks
   provisioner "remote-exec" {
     inline = [
       "echo '🚀 Starting automated container update...'",
-      "cd /opt/asset-archive",
+      # Wait for cloud-init to finish or fallback to a fixed delay
+      "cloud-init status --wait || sleep 90",
+      # Wait for app directory to exist
+      "until [ -d /opt/asset-archive ]; do echo 'Waiting for /opt/asset-archive...'; sleep 5; done",
+      # Wait for script to exist and be executable
+      "until [ -x /opt/asset-archive/update-containers.sh ]; do echo 'Waiting for update-containers.sh...'; sleep 5; done",
+      # Export images and run update
       "export CMS_IMAGE='${var.container_registry_images.cms}'",
       "export FRONTEND_IMAGE='${var.container_registry_images.frontend}'",
-      "./update-containers.sh"
+      "cd /opt/asset-archive && ./update-containers.sh"
     ]
   }
 
