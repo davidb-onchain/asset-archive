@@ -20,6 +20,11 @@ on:
         description: 'Frontend image tag to deploy'
         required: false
         type: string
+  push:
+    branches:
+      - develop
+    paths:
+      - '.github/workflows/deploy.yml'
 
 jobs:
   deploy:
