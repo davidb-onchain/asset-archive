@@ -67,32 +67,26 @@ jobs:
 
     - name: Wait for Droplet to be Ready
       run: |
-        echo "⏳ Waiting for droplet to be accessible via SSH..."
+        echo "⏳ Testing SSH connection to droplet..."
         echo "🔗 Connecting to: ${{ steps.droplet.outputs.droplet_ip }}"
         
-        # Try a few quick attempts first
-        for i in $(seq 1 5); do
-          if ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 -i <(echo "${{ secrets.SSH_PRIVATE_KEY }}") root@${{ steps.droplet.outputs.droplet_ip }} "echo 'SSH connection successful'" 2>/dev/null; then
-            echo "✅ Droplet is ready (quick connect on attempt $i)"
-            exit 0
-          fi
-          echo "⏳ Quick attempt $i/5..."
-          sleep 2
-        done
+        # Create proper SSH key file
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/ssh_key
+        chmod 600 /tmp/ssh_key
         
-        # If quick attempts fail, try longer waits
-        echo "⏳ Quick attempts failed, trying with longer timeouts..."
-        for i in $(seq 1 20); do
-          if ssh -o StrictHostKeyChecking=no -o ConnectTimeout=15 -i <(echo "${{ secrets.SSH_PRIVATE_KEY }}") root@${{ steps.droplet.outputs.droplet_ip }} "echo 'SSH connection successful'" 2>/dev/null; then
-            echo "✅ Droplet is ready (connected on attempt $i)"
-            exit 0
-          fi
-          echo "⏳ Attempt $i/20 - waiting for SSH access..."
-          sleep 10
-        done
+        # Test SSH connection (should work immediately if droplet is ready)
+        if ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -i /tmp/ssh_key root@${{ steps.droplet.outputs.droplet_ip }} "echo 'SSH connection successful'" 2>/dev/null; then
+          echo "✅ SSH connection successful"
+        else
+          echo "❌ SSH connection failed"
+          echo "Debugging info:"
+          echo "- Droplet IP: ${{ steps.droplet.outputs.droplet_ip }}"
+          echo "- SSH key file created: $(ls -la /tmp/ssh_key)"
+          rm -f /tmp/ssh_key
+          exit 1
+        fi
         
-        echo "❌ SSH connection failed after all attempts"
-        exit 1
+        rm -f /tmp/ssh_key
 
     - name: Deploy Container Updates via SSH
       run: |
