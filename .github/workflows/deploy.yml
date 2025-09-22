@@ -43,11 +43,11 @@ jobs:
           # Manual trigger - use provided images or defaults
           CMS_IMAGE="${{ github.event.inputs.cms_image }}"
           FRONTEND_IMAGE="${{ github.event.inputs.frontend_image }}"
-          
+
           if [ -z "$CMS_IMAGE" ]; then
             CMS_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-cms:${{ github.ref_name }}"
           fi
-          
+
           if [ -z "$FRONTEND_IMAGE" ]; then
             FRONTEND_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-frontend:${{ github.ref_name }}"
           fi
@@ -58,36 +58,90 @@ jobs:
           CMS_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-cms:${{ github.ref_name }}-${SHORT_SHA}"
           FRONTEND_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-frontend:${{ github.ref_name }}-${SHORT_SHA}"
         fi
-        
+
         echo "cms_image=${CMS_IMAGE}" >> $GITHUB_OUTPUT
         echo "frontend_image=${FRONTEND_IMAGE}" >> $GITHUB_OUTPUT
         echo "Deploying CMS: ${CMS_IMAGE}"
         echo "Deploying Frontend: ${FRONTEND_IMAGE}"
 
-    - name: Terraform Init
+    - name: Get Droplet IP Address
+      id: droplet
       env:
         DO_PAT: ${{ secrets.DO_PAT }}
-        SPACES_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_KEY_ID }}
-        SPACES_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
       run: |
-        terraform -chdir=deploy/infra init \
-          -backend-config="access_key=$SPACES_ACCESS_KEY_ID" \
-          -backend-config="secret_key=$SPACES_SECRET_ACCESS_KEY"
+        # Get droplet IP using DigitalOcean API
+        DROPLET_IP=$(curl -s -X GET \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $DO_PAT" \
+          "https://api.digitalocean.com/v2/droplets?tag_name=project:asset-archive" | \
+          jq -r '.droplets[] | select(.name=="asset-archive-dev-app") | .networks.v4[] | select(.type=="public") | .ip_address')
+        
+        if [ -z "$DROPLET_IP" ] || [ "$DROPLET_IP" = "null" ]; then
+          echo "❌ Could not find droplet IP address"
+          exit 1
+        fi
+        
+        echo "droplet_ip=${DROPLET_IP}" >> $GITHUB_OUTPUT
+        echo "🌐 Droplet IP: ${DROPLET_IP}"
 
-    - name: Deploy Container Updates
-      env:
-        DO_PAT: ${{ secrets.DO_PAT }}
-        SPACES_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_KEY_ID }}
-        SPACES_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
-        TF_VAR_do_token: ${{ secrets.DO_PAT }}
-        TF_VAR_spaces_access_key_id: ${{ secrets.SPACES_ACCESS_KEY_ID }}
-        TF_VAR_spaces_secret_access_key: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
-        TF_VAR_ssh_public_key: ${{ secrets.SSH_PUBLIC_KEY }}
-        TF_VAR_ssh_key_name: ${{ secrets.SSH_KEY_NAME }}
-        TF_VAR_ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Wait for Droplet to be Ready
       run: |
-        terraform -chdir=deploy/infra apply -auto-approve \
-          -var="container_registry_images={cms=\"${{ steps.images.outputs.cms_image }}\",frontend=\"${{ steps.images.outputs.frontend_image }}\"}"
+        echo "⏳ Waiting for droplet to be accessible via SSH..."
+        for i in $(seq 1 30); do
+          if ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -i <(echo "${{ secrets.SSH_PRIVATE_KEY }}") root@${{ steps.droplet.outputs.droplet_ip }} "echo 'SSH connection successful'" 2>/dev/null; then
+            echo "✅ Droplet is ready"
+            break
+          fi
+          echo "⏳ Attempt $i/30 - waiting for SSH access..."
+          sleep 10
+        done
+
+    - name: Deploy Container Updates via SSH
+      run: |
+        echo "🚀 Deploying containers via direct SSH..."
+        
+        # Create SSH key file
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/ssh_key
+        chmod 600 /tmp/ssh_key
+        
+        # Execute deployment commands on the droplet
+        ssh -o StrictHostKeyChecking=no -i /tmp/ssh_key root@${{ steps.droplet.outputs.droplet_ip }} << 'EOF'
+          set -euo pipefail
+          
+          echo "🔄 Starting container update process..."
+          cd /opt/asset-archive
+          
+          # Update docker-compose.yml with new image tags
+          if [ ! -z "${{ steps.images.outputs.cms_image }}" ]; then
+            sed -i "s|image: .*asset-archive-cms.*|image: ${{ steps.images.outputs.cms_image }}|g" docker-compose.yml
+            echo "✅ Updated CMS image to: ${{ steps.images.outputs.cms_image }}"
+          fi
+          
+          if [ ! -z "${{ steps.images.outputs.frontend_image }}" ]; then
+            sed -i "s|image: .*asset-archive-frontend.*|image: ${{ steps.images.outputs.frontend_image }}|g" docker-compose.yml  
+            echo "✅ Updated Frontend image to: ${{ steps.images.outputs.frontend_image }}"
+          fi
+          
+          # Pull new images
+          echo "📥 Pulling new container images..."
+          docker compose pull
+          
+          # Gracefully restart services (preserves volumes)
+          echo "🔄 Restarting containers..."
+          docker compose up -d --force-recreate --no-deps strapi frontend
+          
+          # Wait for services to be healthy
+          echo "⏳ Waiting for services to be ready..."
+          timeout 60 bash -c 'until docker compose exec -T postgres pg_isready -U strapi -d strapi; do sleep 2; done' || echo "⚠️ Database health check timeout"
+          timeout 120 bash -c 'until curl -f http://localhost:1337/admin; do sleep 5; done' || echo "⚠️ Strapi health check timeout"
+          timeout 120 bash -c 'until curl -f http://localhost:3000; do sleep 5; done' || echo "⚠️ Frontend health check timeout"
+          
+          echo "✅ Container update complete!"
+          docker compose ps
+        EOF
+        
+        # Clean up SSH key
+        rm -f /tmp/ssh_key
 
     - name: Deployment Summary
       run: |
@@ -99,4 +153,9 @@ jobs:
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### Environment:" >> $GITHUB_STEP_SUMMARY
         echo "- **Branch**: \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
-        echo "- **Commit**: \`${{ github.event.workflow_run.head_sha || github.sha }}\`" >> $GITHUB_STEP_SUMMARY 
+        echo "- **Commit**: \`${{ github.event.workflow_run.head_sha || github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "- **Droplet IP**: \`${{ steps.droplet.outputs.droplet_ip }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Access URLs:" >> $GITHUB_STEP_SUMMARY
+        echo "- **Frontend**: http://${{ steps.droplet.outputs.droplet_ip }}:3000" >> $GITHUB_STEP_SUMMARY
+        echo "- **CMS Admin**: http://${{ steps.droplet.outputs.droplet_ip }}:1337/admin" >> $GITHUB_STEP_SUMMARY 
