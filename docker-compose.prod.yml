@@ -17,7 +17,7 @@ services:
       retries: 5
 
   strapi:
-    image: ghcr.io/davidb-onchain/asset-archive-cms:develop-137d3d6
+    image: ghcr.io/davidb-onchain/asset-archive-cms:latest
     restart: always
     ports:
       - "1337:1337"
@@ -44,7 +44,7 @@ services:
         condition: service_healthy
 
   frontend:
-    image: ghcr.io/davidb-onchain/asset-archive-frontend:develop-137d3d6
+    image: ghcr.io/davidb-onchain/asset-archive-frontend:latest
     ports:
       - "3000:3000"
     environment:

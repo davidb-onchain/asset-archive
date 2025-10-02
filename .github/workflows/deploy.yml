@@ -7,12 +7,12 @@ on:
         description: 'CMS image tag to deploy (optional)'
         required: false
         type: string
-        default: 'ghcr.io/davidb-onchain/asset-archive-cms:main-137d3d6'
+        default: 'ghcr.io/davidb-onchain/asset-archive-cms:latest'
       frontend_image:
         description: 'Frontend image tag to deploy (optional)'
         required: false
         type: string
-        default: 'ghcr.io/davidb-onchain/asset-archive-frontend:main-137d3d6'
+        default: 'ghcr.io/davidb-onchain/asset-archive-frontend:latest'
 
 permissions:
   contents: read
@@ -33,11 +33,11 @@ jobs:
         FRONTEND_IMAGE="${{ github.event.inputs.frontend_image }}"
         
         if [ -z "$CMS_IMAGE" ]; then
-          CMS_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-cms:main-137d3d6"
+          CMS_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-cms:latest"
         fi
         
         if [ -z "$FRONTEND_IMAGE" ]; then
-          FRONTEND_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-frontend:main-137d3d6"
+          FRONTEND_IMAGE="ghcr.io/${{ github.repository_owner }}/asset-archive-frontend:latest"
         fi
 
         echo "cms_image=${CMS_IMAGE}" >> $GITHUB_OUTPUT
