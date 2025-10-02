@@ -1,0 +1,19 @@
+{
+  "name": "asset-archive-extractor",
+  "version": "1.0.0",
+  "description": "Scripts for fetching and parsing data for the asset archive.",
+  "private": true,
+  "scripts": {
+    "fetch:search": "node fetch.js --type=search",
+    "fetch:product": "node fetch.js --type=product",
+    "fetch:publisher": "node fetch.js --type=publisher",
+    "parse:search": "node parse.js --type=search",
+    "parse:product": "node parse.js --type=product"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "fs-extra": "^11.2.0",
+    "puppeteer": "^22.13.1",
+    "yargs": "^17.7.2"
+  }
+} 

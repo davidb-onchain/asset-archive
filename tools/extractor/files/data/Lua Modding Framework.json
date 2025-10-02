@@ -1,0 +1,27 @@
+{
+  "assetId": "226043",
+  "title": "Lua Modding Framework",
+  "slug": "lua-modding-framework",
+  "shortDescription": "uLua is a scripting framework which enables the development of a Lua API for your Unity project",
+  "description": "uLua is a scripting framework which enables the development of a Lua API for your Unity project. Users, as well as developers, may use this API to add content to your project by writing Lua scripts.uLua has been tested and is compatible with the following LTS versions of Unity:6000.1.11f1uLua is a scripting framework which enables the development of a Lua API for your Unity project. Users, as well as developers, may use this API to add content to your project by writing Lua scripts.uLua wraps around MoonSharp and provides an object oriented Lua Modding framework.It works by setting up an application-wide Lua context and exposing game objects to it.Objects exposed to the Lua context can then be accessed in Lua scripts, allowing users to interact with Unity Engine at runtime.uLua includes the following features:Lua Sandbox: Expose your game object components and data structures to Lua by utilising the base classes provided.Script Execution: Execute Lua scripts from the Resources folder or an external directory.Assets: Allow users to load custom assets into your game within Lua (images, audioclips, text files, asset bundles).Event System: Invoke events in C# or Lua and implement the relevant callbacks/handlers in Lua.Packages: Organise scripts in packages which can be easily installed and removed from a project. Packages feature a dependency system which can be used to enforce a specific execution order.Before you purchase uLua, feel free to check out the following resources:uLua Documentation: The full documentation, including a tutorial on how to use the toolkit.Note: You must install the Unity MoonSharp plugin before you can use uLua.uLua consists of the following main scripts:uLua.API: Class that implements an event handling system and a script execution framework.uLua.LuaExposeSequencer: MonoBehaviour script which exposes other MonoBehaviours to Lua as configured in the inspector.uLua.LuaMonoBehaviour: MonoBehaviour script which exposes its instances to Lua. To use as a base for game object components which will be accessible in your API.",
+  "price": 15,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": 2.7,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/2b68ff7c-1deb-403c-bcaa-fca507c8aa57.jpg",
+  "category": "utilities",
+  "publisher": {
+    "name": "ANT Software",
+    "url": "https://assetstore.unity.com/publishers/35671",
+    "slug": "ant-software"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/226043",
+  "sourceFile": "Lua Modding Framework.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:21.297Z",
+  "updatedAt": "2025-10-01T22:27:50.849Z",
+  "searchQuery": "Lua Modding Framework",
+  "matchConfidence": 1
+}

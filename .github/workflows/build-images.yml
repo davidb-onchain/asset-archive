@@ -87,8 +87,8 @@ jobs:
       - name: Build and push CMS image
         uses: docker/build-push-action@v5
         with:
-          context: ./services/cms/apps/cms
-          file: ./services/cms/apps/cms/Dockerfile
+          context: ./services/cms
+          file: ./services/cms/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -131,8 +131,8 @@ jobs:
       - name: Build and push Frontend image
         uses: docker/build-push-action@v5
         with:
-          context: ./services/frontend/apps/frontend
-          file: ./services/frontend/apps/frontend/Dockerfile
+          context: ./services/frontend
+          file: ./services/frontend/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -141,6 +141,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: |
             NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
+            NEXT_PUBLIC_DEMO_MODE=true
 
   summary:
     needs: [detect-changes, build-cms, build-frontend]

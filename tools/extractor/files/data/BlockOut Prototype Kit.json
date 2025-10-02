@@ -1,0 +1,27 @@
+{
+  "assetId": "169790",
+  "title": "BlockOut Prototype Kit",
+  "slug": "blockout-prototype-kit",
+  "shortDescription": "Models for prototyping your game ideas and levels",
+  "description": "Models for prototyping your game ideas and levels. If you ever started a new project, but spend too much time modelling and assembling your levels this asset is for you. \nDon`t do repetitive work, focus on your project ideas!\n\n\nIf you are an asset creator include models from this kit to showcase your scripts and mechanics!\n\n\nHumanoid Character\nDummy with changeable colors. Body can be hidden and Arms used for first person games. Only hands can be left visible for VR projects.\n\n\n Transport\n- Vehicle with variety of modifications. Use it as a prototype for Cars, Trucks and Tanks. Wheels, doors and steering wheel can be transformed. Interior included.\n- Aircraft with propellers and engines for different kind of airplanes. All parts can be transformed. Interior included.\n- Boat for fast prototyping your sea transport mechanics.\n\n\n Weapons\nUse included Gun and Pistol with movable parts to try out weapon scripts. Sword, axe and shields are also included!\n\n\n Environment Parts\nPrototype your game levels with easy.\n- Trees and Bushes\n- Building Parts\n- Tunnels, Primitives and stands\n\n\n Materials and Shaders\n- Triplanar shaders so you will not worry about stretched textures.\n- Variety of materials - Blueprints, Lines, Checkered, Concrete and Metal textures with special shader allowing you to easily change colors..\n\n\n Procedural Primitives\nTables, Chairs, Stairs and basic primitives such as Box, Torus, Wedge and others are generated procedurally.\n\n\n Camera Scripts\nFree Fly, Orbit and Top-Down camera scripts so you will not waste your time rewriting them.\n\n\nIf you want to see something else to be included in this kit feel free to leave a comment.",
+  "price": 9,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": null,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/334515d1-260e-46aa-aa9b-468cd1b4b853.jpg",
+  "category": "environments",
+  "publisher": {
+    "name": "UniquePlayer",
+    "url": "https://assetstore.unity.com/publishers/29127",
+    "slug": "uniqueplayer"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/169790",
+  "sourceFile": "BlockOut Prototype Kit.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:20.178Z",
+  "updatedAt": "2025-10-01T22:27:50.100Z",
+  "searchQuery": "BlockOut Prototype Kit",
+  "matchConfidence": 1
+}

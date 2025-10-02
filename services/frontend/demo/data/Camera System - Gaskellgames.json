@@ -1,0 +1,27 @@
+{
+  "assetId": "248116",
+  "title": "Camera System - Gaskellgames",
+  "slug": "camera-system-gaskellgames",
+  "shortDescription": "Camera System: This simple to use toolset allows you to easily implement different camera styles into your project",
+  "description": "Camera System: This simple to use toolset allows you to easily implement different camera styles into your project. Easy to use, and highly customisable.The asset packages 'GgCore' and 'Input Event System' are required for this package to function. All required packages are free for owners of Gaskellgames' Camera System package.This package also uses the unity input system module. You must download and install ALL required packages BEFORE you load this package.The asset package 'GgCore' is required for this package to function. The GgCore package is FREE for owners of any Gaskellgames package. Once this package is purchased, the 100% discount will show on the GgCore asset page.This simple to use package allows you to easily add different camera styles into your project. All styles are customisable in the inspector via sliders and toggles.The package can be configured for the following camera styles:First person,Third person: Follow,Third person: Freelook,Top-down,Room camera,Multi-Target Camera,Cinematic Camera,Free Fly Camera (Photo Mode).The camera system works in single player and multiplayer projects! The cameras use their own seperate trigger system to change / activate other views.Requirements:GgCore Package is required for this package to function. You can purchase GgCore for Free with any account that has previously purchased any Gaskellgames package.Input Event System Package is required for this package to function. You can pick up the Input Event System for Free.Camera Styles:First person,Third person: Follow,Third person: Freelook,Top-down,Room camera,Multi-Target Camera,Cinematic Camera,Free Fly Camera (Photo Mode).Camera Features:Camera collisionsCamera blending (Cut, Fade & Move to Position)Camera shake (impulse)Coding Level Requirement:None: You can simply add the camera componants and adjust everything in the inspectorUploaded With Unity Version:2021.3.45fHelp / Support:Discord: All Things GaskellgamesWebsite: contact page",
+  "price": 0,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": 5,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/f80b5a7d-0267-482e-a5bc-00df0285517e.jpg",
+  "category": "camera",
+  "publisher": {
+    "name": "Gaskellgames",
+    "url": "https://assetstore.unity.com/publishers/75563",
+    "slug": "gaskellgames"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/248116",
+  "sourceFile": "Camera System - Gaskellgames.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:20.455Z",
+  "updatedAt": "2025-10-01T22:27:50.326Z",
+  "searchQuery": "Camera System Gaskellgames",
+  "matchConfidence": 1
+}

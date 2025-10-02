@@ -1,0 +1,183 @@
+{
+  "3d": {
+    "name": "3D",
+    "slug": "3d",
+    "children": {
+      "characters": {
+        "name": "Characters",
+        "slug": "characters",
+        "children": {
+          "humanoids": {
+            "name": "Humanoids",
+            "slug": "humanoids",
+            "children": {
+              "fantasy": {
+                "name": "Fantasy",
+                "slug": "fantasy",
+                "children": {}
+              },
+              "humans": {
+                "name": "Humans",
+                "slug": "humans",
+                "children": {}
+              }
+            }
+          }
+        }
+      },
+      "environments": {
+        "name": "Environments",
+        "slug": "environments",
+        "children": {}
+      },
+      "props": {
+        "name": "Props",
+        "slug": "props",
+        "children": {}
+      },
+      "animations": {
+        "name": "Animations",
+        "slug": "animations",
+        "children": {}
+      }
+    }
+  },
+  "2d": {
+    "name": "2D",
+    "slug": "2d",
+    "children": {
+      "gui": {
+        "name": "GUI",
+        "slug": "gui",
+        "children": {}
+      },
+      "textures-amp-materials": {
+        "name": "Textures &amp; Materials",
+        "slug": "textures-amp-materials",
+        "children": {
+          "sky": {
+            "name": "Sky",
+            "slug": "sky",
+            "children": {}
+          }
+        }
+      }
+    }
+  },
+  "vfx": {
+    "name": "VFX",
+    "slug": "vfx",
+    "children": {
+      "shaders": {
+        "name": "Shaders",
+        "slug": "shaders",
+        "children": {
+          "fullscreen-amp-camera-effects": {
+            "name": "Fullscreen &amp; Camera Effects",
+            "slug": "fullscreen-amp-camera-effects",
+            "children": {}
+          }
+        }
+      },
+      "particles": {
+        "name": "Particles",
+        "slug": "particles",
+        "children": {
+          "spells": {
+            "name": "Spells",
+            "slug": "spells",
+            "children": {}
+          }
+        }
+      }
+    }
+  },
+  "tools": {
+    "name": "Tools",
+    "slug": "tools",
+    "children": {
+      "modeling": {
+        "name": "Modeling",
+        "slug": "modeling",
+        "children": {}
+      },
+      "behavior-ai": {
+        "name": "Behavior AI",
+        "slug": "behavior-ai",
+        "children": {}
+      },
+      "camera": {
+        "name": "Camera",
+        "slug": "camera",
+        "children": {}
+      },
+      "level-design": {
+        "name": "Level Design",
+        "slug": "level-design",
+        "children": {}
+      },
+      "particles-amp-effects": {
+        "name": "Particles &amp; Effects",
+        "slug": "particles-amp-effects",
+        "children": {}
+      },
+      "gui": {
+        "name": "GUI",
+        "slug": "gui",
+        "children": {}
+      },
+      "terrain": {
+        "name": "Terrain",
+        "slug": "terrain",
+        "children": {}
+      },
+      "utilities": {
+        "name": "Utilities",
+        "slug": "utilities",
+        "children": {}
+      },
+      "physics": {
+        "name": "Physics",
+        "slug": "physics",
+        "children": {}
+      },
+      "animation": {
+        "name": "Animation",
+        "slug": "animation",
+        "children": {}
+      },
+      "visual-scripting": {
+        "name": "Visual Scripting",
+        "slug": "visual-scripting",
+        "children": {}
+      }
+    }
+  },
+  "templates": {
+    "name": "Templates",
+    "slug": "templates",
+    "children": {
+      "packs": {
+        "name": "Packs",
+        "slug": "packs",
+        "children": {}
+      }
+    }
+  },
+  "add-ons": {
+    "name": "Add-Ons",
+    "slug": "add-ons",
+    "children": {}
+  },
+  "essentials": {
+    "name": "Essentials",
+    "slug": "essentials",
+    "children": {
+      "tutorial-projects": {
+        "name": "Tutorial Projects",
+        "slug": "tutorial-projects",
+        "children": {}
+      }
+    }
+  }
+}

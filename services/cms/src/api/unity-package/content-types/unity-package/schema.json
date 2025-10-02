@@ -1,0 +1,25 @@
+{
+  "collectionName": "unity_packages",
+  "info": {
+    "singularName": "unity-package",
+    "pluralName": "unity-packages",
+    "displayName": "UnityPackage"
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "fileName": { "type": "string", "required": true },
+    "fileSizeBytes": { "type": "biginteger" },
+    "sha256": { "type": "string", "unique": true },
+    "sha1": { "type": "string" },
+    "storageUrl": { "type": "string" },
+    "localPath": { "type": "string" },
+    "assetCount": { "type": "integer" },
+    "assetExtensions": { "type": "json" },
+    "rootFolders": { "type": "json" },
+    "guidSample": { "type": "json" },
+    "guidCount": { "type": "integer" },
+    "processedAt": { "type": "datetime" },
+    "downloadCount": { "type": "integer", "default": 0 },
+    "asset": { "type": "relation", "relation": "oneToOne", "target": "api::asset.asset", "mappedBy": "unityPackage" }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "assetId": "291299",
+  "title": "Slash Barrage Wave VFX",
+  "slug": "slash-barrage-wave-vfx",
+  "shortDescription": "Sword slash projectiles with varying elements for your game",
+  "description": "Sword slash projectiles with varying elements for your game. Includes cast FX and Impact!Please check the readme file and note this project is meant to be used in 3D projects only.🛆🛆🛆  Elemental Sword Slashes  🛆🛆🛆19 Slash Waves VFX, including a impact and \"Charge\" cast VFX for each too!TOTAL OF 57 UNIQUE VFX!Compatible with all rendering pipelines! Please note that our shader is not compatible with some 2D setups🛆🛆🛆 Key Features 🛆🛆🛆Prefabs are ready to be used out of the box, simply drag and drop them into your scene!1 Shader for all particlesIncludes one asset overview scene, and a contextual example of usage.Compatible with ALL rendering pipelinesThe package contains 57 unique VFX with some of the following themes:ArcaneCircus / MagicianCrimsonDark1DiscoFairyFireFrostHolyLightMistNatureShock YellowShock BlueTechUniverseVoidWaterWind116 Materials103 Textures6 Models (Used only in particles)57 VFX Prefabs1 Shader",
+  "price": 25,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": null,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/b843934a-7632-43f1-82d0-013b40650d6b.jpg",
+  "category": "spells",
+  "publisher": {
+    "name": "Piloto Studio",
+    "url": "https://assetstore.unity.com/publishers/48767",
+    "slug": "piloto-studio"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/291299",
+  "sourceFile": "Slash Barrage Wave VFX.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:21.935Z",
+  "updatedAt": "2025-10-01T22:27:51.260Z",
+  "searchQuery": "Slash Barrage Wave VFX",
+  "matchConfidence": 1
+}

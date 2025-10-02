@@ -1,0 +1,27 @@
+{
+  "assetId": "266086",
+  "title": "Artistic: Color Isolation",
+  "slug": "artistic-color-isolation",
+  "shortDescription": "Isolates areas by color and applies effects",
+  "description": "Isolates areas by color and applies effects. Less than $3 in 'Artistic Bundle'!🕹 DEMO | 📄 DOCUMENTATION | ♥ MORE ASSETS ♥✓ Many parameters to configure.✓ CIELAB color space.✓ Full source code (scripts and shaders).✓ Included in the 'Artistic Bundle'.💡 Online documentation, support and free updates.💡 Desktop, mobile, VR and web.💡 Unity 6 or higher (Render Graph support).💡 Unity 2022.3 or higher.💡 Universal RP 12.1.15 or higher.💡 Assets used in video and demo are not included.Other bundles that might interest you:✨ Spice Up: designed to increase the juice of your games.✨ Retro: give your games a unique retro look.✨ Glitches: unleash the juice!✨Camera Transitions: cinematic camera transitions.✨ LUTs: the largest collection of LUTs in the whole store.✨ True Ballistics: a physically-accurate ballistics.❤️ Leave a review if you found this asset useful, thanks! ❤️",
+  "price": 9.99,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": null,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/6da76389-1a92-4ce9-b267-cb0b8cd702fa.jpg",
+  "category": "fullscreen-amp-camera-effects",
+  "publisher": {
+    "name": "Fronkon Games",
+    "url": "https://assetstore.unity.com/publishers/62716",
+    "slug": "fronkon-games"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/266086",
+  "sourceFile": "Artistic Color Isolation.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:20.069Z",
+  "updatedAt": "2025-10-01T22:27:50.032Z",
+  "searchQuery": "Artistic Color Isolation",
+  "matchConfidence": 1
+}

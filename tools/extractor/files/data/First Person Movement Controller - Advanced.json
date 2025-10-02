@@ -1,0 +1,27 @@
+{
+  "assetId": "214892",
+  "title": "First Person Movement Controller - Advanced",
+  "slug": "first-person-movement-controller-advanced",
+  "shortDescription": "Overfort's First Person Movement Controller - Advanced is a flexible  tool that allows you to create a vast range of unique first-person games without any coding skills required⭐Now with HDRP and URP Support!Try the online demo now!First Person Movement Controller - Advanced includes scripts to enhance the built-in CharacterController by adding features with a simple click.Features can be enabled with a simple checkbox from the main script and the relevant variables have been exposed in the editor to make it accessible even to non-programmers.This allows for enormous flexibility and creates the possibility of generating hundreds of different variations of movement styles.Features:✅ Basic walk movement✅ Run and sprint✅ Parkour and Climbing✅ Crouch and prone movement✅ Sliding✅ Left and right leaning✅ Grappling hook (Include hook 3D model)✅ Wall run✅ Headbob✅ High-quality sounds✅ 5 movement presets✅ Unity's new Input System supportDo not include:❌ Character❌ Character animations❌ First person hands❌ Shooting or melee combat❌ Health and damage systemBEFORE IMPORTING THE PACKAGE, MAKE SURE TO BACK UP THE PROJECT AND YOUR INPUT MANAGER FOR SAFETY.BE AWARE THAT THE INPUT MANAGER WILL BE OVERRIDDEN",
+  "description": "Overfort's First Person Movement Controller - Advanced is a flexible  tool that allows you to create a vast range of unique first-person games without any coding skills required⭐Now with HDRP and URP Support!Try the online demo now!First Person Movement Controller - Advanced includes scripts to enhance the built-in CharacterController by adding features with a simple click.Features can be enabled with a simple checkbox from the main script and the relevant variables have been exposed in the editor to make it accessible even to non-programmers.This allows for enormous flexibility and creates the possibility of generating hundreds of different variations of movement styles.Features:✅ Basic walk movement✅ Run and sprint✅ Parkour and Climbing✅ Crouch and prone movement✅ Sliding✅ Left and right leaning✅ Grappling hook (Include hook 3D model)✅ Wall run✅ Headbob✅ High-quality sounds✅ 5 movement presets✅ Unity's new Input System supportDo not include:❌ Character❌ Character animations❌ First person hands❌ Shooting or melee combat❌ Health and damage systemBEFORE IMPORTING THE PACKAGE, MAKE SURE TO BACK UP THE PROJECT AND YOUR INPUT MANAGER FOR SAFETY.BE AWARE THAT THE INPUT MANAGER WILL BE OVERRIDDEN. IN ORDER TO BACK UP YOUR INPUT MANAGER SETTINGS, MAKE SURE TO CREATE A COPY OF \"INPUTMANAGER.ASSET\" INSIDE THE PROJECT SETTINGS FOLDER.YOU CAN REPLACE THE \"INPUT MANAGER.ASSET\" FILE WITH YOUR COPY ONCE THE PACKAGE IS INSTALLED TO RESTORE YOUR INPUT SETTINGS.Try the online demo now!If you have an issue, consult our online documentation or reach us at overfort.games@gmail.comTechnical Details:Supports rigidbody interactionsSupports moving platformsModular and customizableWorks with Unity built-in CharacterControllerExhaustively commented source codeBuilt to minimize heap allocation/garbage collection",
+  "price": 24.99,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": 4.1,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/a2fc29fc-06f2-401d-a5bc-73394f2aee11.jpg",
+  "category": "packs",
+  "publisher": {
+    "name": "Overfort Games",
+    "url": "https://assetstore.unity.com/publishers/62931",
+    "slug": "overfort-games"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/214892",
+  "sourceFile": "First Person Movement Controller - Advanced.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:20.694Z",
+  "updatedAt": "2025-10-01T22:27:50.474Z",
+  "searchQuery": "First Person Movement Controller Advanced",
+  "matchConfidence": 1
+}

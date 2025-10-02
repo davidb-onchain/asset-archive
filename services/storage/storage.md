@@ -1,0 +1,1 @@
+We need to update docker compose to include a container solely dedicated to testing storage - in the future it will be replaced with an S3 bucket.

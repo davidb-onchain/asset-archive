@@ -1,0 +1,27 @@
+{
+  "assetId": "240061",
+  "title": "Retarget Pro",
+  "slug": "retarget-pro",
+  "shortDescription": "Generic animation retargeting made simple.Demo Project • Docs • Roadmap🎮 Generic Retargeting Made SimpleIn Unity, you can't share animations between Generic characters",
+  "description": "Generic animation retargeting made simple.Demo Project • Docs • Roadmap🎮 Generic Retargeting Made SimpleIn Unity, you can't share animations between Generic characters. Retarget Pro was created to make it possible! Whether your character is a cute cat or a tactical soldier, this plugin will seamlessly transfer animations to your model.Let's see how this tool will help you.🔹 Wide Range of Use-CasesRetarget Pro works with any Generic skeleton, whether it's a human, animal, or even a weapon.🔹 Perfect for First-Person GamesShare first-person animations with incredible precision. Works great with FPS reloading animations!🔹 Simple WorkflowCreate a retargeting profile, adjust the settings, and bake your animation.🔹 Easy AutomationRetarget entire animator controllers and multiple animation clips at the same time.🔹 Better Than Humanoid SystemForget about feet sliding or skewed fingers' rotations. This tool avoids the limitations of Unity Humanoids.YouTube • Discord • Demo ProjectSupported Rig Type: Generic, partially Humanoid (only runtime retargeting for Humanoid characters).Baking Support: Yes, in the Editor for Generic animations only.Runtime Support: Yes, optimized with Animation Jobs System.",
+  "price": 29.99,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": 4.6,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/75158895-6e35-4dc8-9b8b-7a8594b337df.jpg",
+  "category": "animation",
+  "publisher": {
+    "name": "KINEMATION",
+    "url": "https://assetstore.unity.com/publishers/74506",
+    "slug": "kinemation"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/240061",
+  "sourceFile": "Retarget Pro.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:21.651Z",
+  "updatedAt": "2025-10-01T22:27:51.063Z",
+  "searchQuery": "Retarget Pro",
+  "matchConfidence": 1
+}

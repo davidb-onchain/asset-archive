@@ -1,0 +1,27 @@
+{
+  "assetId": "260083",
+  "title": "Sequine - Sequencing, Animation, and Visual Scripting",
+  "slug": "sequine-sequencing-animation-and-visual-scripting",
+  "shortDescription": "Sequine is a general sequencing tool and visual scripting for Unity.\nYou can also play animation clips on demand without the restriction of Animator Controller!Here is what you can do with the sequencing tool:Sequence animation clips directly without the restriction of Animator ControllerSequence text animations with stackable behaviourSequence script function/command executionThe sequence can be in any kind of Unity object, be it in MonoBehaviour, ScriptableObject, and even PlayableAsset as in Timeline Clip!FEATURESPlay Animation On DemandPlay animations on demand without relying on Animator Controller",
+  "description": "Sequine is a general sequencing tool and visual scripting for Unity.\nYou can also play animation clips on demand without the restriction of Animator Controller!Here is what you can do with the sequencing tool:Sequence animation clips directly without the restriction of Animator ControllerSequence text animations with stackable behaviourSequence script function/command executionThe sequence can be in any kind of Unity object, be it in MonoBehaviour, ScriptableObject, and even PlayableAsset as in Timeline Clip!FEATURESPlay Animation On DemandPlay animations on demand without relying on Animator Controller. You can even utilize this without our sequencing system to implement your own animation system. It also comes with a visualized debugger to track the animation progress and blendings on each layer.Command Execution SequencingSequence your command/function executions using node-based editor. You can also create a branching flow and parallel flow.Text AnimationUsing TextMeshPro, Sequine also has a stackable text animation tool with some presets available. You can also code your own custom text animation behaviour.Call it AnywhereYou can call the sequence from anywhere, be it from MonoBehaviour, ScriptableObject, or Timeline. It can even be called across different scenes.CustomizableSequine already comes with essential commands, but in case that's not enough for you, you can also add your own custom command.Preserve Global DataSequine also has built-in global data management that stores predefined variables that can be modified during runtime, and can be saved or loaded.SUPPORT• Full documentation website available• Discord channelHave an idea or feature request? You can join our Discord channel, and post your idea there!Asset uses Unity-Chan! Model under the original EULA \"Unity-Chan License (UCL)\", Odin Serializer under the \"Apache License\", and OneOf under the \"MIT License\"; see Third-Party Notices.txt file in package for details.Highlights:Version 1.8.0COMPATIBILITYAPI compatibility level .NET 4.x / .NET Framework is required",
+  "price": 55,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": 5,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/82c8e95f-dfb9-4e11-b078-d9164a7c5596.jpg",
+  "category": "visual-scripting",
+  "publisher": {
+    "name": "Dilaura",
+    "url": "https://assetstore.unity.com/publishers/88060",
+    "slug": "dilaura"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/260083",
+  "sourceFile": "Sequine - Sequencing Animation and Visual Scripting.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:21.808Z",
+  "updatedAt": "2025-10-01T22:27:51.149Z",
+  "searchQuery": "Sequine Sequencing Animation and Visual Scripting",
+  "matchConfidence": 1
+}

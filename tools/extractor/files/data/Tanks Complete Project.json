@@ -1,0 +1,27 @@
+{
+  "assetId": "46209",
+  "title": "Tanks! | Complete Project",
+  "slug": "tanks-complete-project",
+  "shortDescription": "Tanks! has been completely revamped for Unity 6 to include new worlds, additional features, a playable demo and way more tanks",
+  "description": "Tanks! has been completely revamped for Unity 6 to include new worlds, additional features, a playable demo and way more tanks. This package is to be used alongside a Unity Learn course (link below).This package contains an extended version of the project created in the Unity Learn course, Tanks: Make a battle game for web and mobile. You can use these assets to create your own version of a single player or local multiplayer tanks game!Want to play our version of Tanks? Give it a play here.You are free to use these assets in any Unity project. This package has a wide array of assets to use and create something unique!Tanks! package includes:13 tank variations3 world themesEnvironmental props for each world theme6 functional power-upsStart, Pause, Tank Selection, and Control UI menu screensTanks and prop VFXMusic and SFXNote: Downloading this asset package using any version of Unity prior to Unity 6000.0.1f1, will download the old version of Tanks!.Asset is under Unity Companion License.",
+  "price": 0,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": 4.7,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/10f6a1f1-626b-4041-824a-db18674f83e7.jpg",
+  "category": "tutorial-projects",
+  "publisher": {
+    "name": "Unity Technologies",
+    "url": "https://assetstore.unity.com/publishers/1",
+    "slug": "unity-technologies"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/46209",
+  "sourceFile": "Tanks Complete Project.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:22.116Z",
+  "updatedAt": "2025-10-01T22:27:51.305Z",
+  "searchQuery": "Tanks Complete Project",
+  "matchConfidence": 1
+}

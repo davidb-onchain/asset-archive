@@ -1,0 +1,335 @@
+{
+  "categories": [
+    {
+      "name": "Complete Projects",
+      "slug": "complete-projects",
+      "description": "Fully-featured projects and game templates."
+    },
+    {
+      "name": "Characters",
+      "slug": "characters",
+      "description": "Character models, animations, and controllers."
+    },
+    {
+      "name": "Environments",
+      "slug": "environments",
+      "description": "Assets for building game worlds and levels."
+    },
+    {
+      "name": "Tools",
+      "slug": "tools",
+      "description": "Utilities and editor extensions to speed up development."
+    },
+    {
+      "name": "VFX",
+      "slug": "vfx",
+      "description": "Visual effects, shaders, and particle systems."
+    }
+  ],
+  "products": [
+    {
+      "title": "3D Characters Pro - Fantasy",
+      "slug": "3d-characters-pro-fantasy",
+      "shortDescription": "With stylized low-poly parts, you can combine different facial expressions, outfits, and various tools to create your own unique character. It's a per...",
+      "description": "With stylized low-poly parts, you can combine different facial expressions, outfits, and various tools to create your own unique character. It's a perfect character pack for fantasy genre games!\n",
+      "price": 49.99,
+      "compareAtPrice": 79.99,
+      "available": true,
+      "images": [
+        {
+          "url": "/placeholder.svg",
+          "alternativeText": "3D Characters Pro - Fantasy"
+        }
+      ],
+      "categories": [
+        "complete-projects"
+      ],
+      "tags": [],
+      "status": "published",
+      "visibility": "public",
+      "metadata": {},
+      "originalCreatedAt": "2025-09-16T16:29:41.444Z",
+      "originalUpdatedAt": "2025-09-16T16:29:41.444Z"
+    },
+    {
+      "title": "AllSky - 220+ Sky - Skybox Set",
+      "slug": "allsky-220-sky-skybox-set",
+      "shortDescription": "A full palette of 220+ skyboxes. Including Day, Night, Anime, Above the Clouds, Cartoon, Fantasy, Hazy, Epic, Space, Mammatus, Sunless and Moonless ca...",
+      "description": "A full palette of 220+ skyboxes. Including Day, Night, Anime, Above the Clouds, Cartoon, Fantasy, Hazy, Epic, Space, Mammatus, Sunless and Moonless categories.\n",
+      "price": 89.99,
+      "available": true,
+      "images": [
+        {
+          "url": "/placeholder.svg",
+          "alternativeText": "AllSky - 220+ Sky - Skybox Set"
+        }
+      ],
+      "categories": [
+        "complete-projects"
+      ],
+      "tags": [],
+      "status": "published",
+      "visibility": "public",
+      "metadata": {},
+      "originalCreatedAt": "2025-09-16T16:29:41.445Z",
+      "originalUpdatedAt": "2025-09-16T16:29:41.445Z"
+    },
+    {
+      "title": "BoZo: Stylized Modular Characters Base Pack",
+      "slug": "bozo-stylized-modular-characters-base-pack",
+      "shortDescription": "Stylized Modular Character is a base character that blend between body types with several clothing options to drag on drop to create the exact charact...",
+      "description": "Stylized Modular Character is a base character that blend between body types with several clothing options to drag on drop to create the exact character you want!\n",
+      "price": 34.99,
+      "compareAtPrice": 59.99,
+      "available": false,
+      "images": [
+        {
+          "url": "/placeholder.svg",
+          "alternativeText": "BoZo: Stylized Modular Characters Base Pack"
+        }
+      ],
+      "categories": [
+        "complete-projects"
+      ],
+      "tags": [],
+      "status": "published",
+      "visibility": "public",
+      "metadata": {},
+      "originalCreatedAt": "2025-09-16T16:29:41.445Z",
+      "originalUpdatedAt": "2025-09-16T16:29:41.445Z"
+    },
+    {
+      "title": "Crash Test Dummy (Color Customizable)",
+      "slug": "crash-test-dummy-color-customizable",
+      "shortDescription": "A crash test dummy character model optimized for all platforms including mobile and VR headsets.",
+      "description": "A crash test dummy character model optimized for all platforms including mobile and VR headsets.\n",
+      "price": 19.99,
+      "available": true,
+      "images": [
+        {
+          "url": "/placeholder.svg",
+          "alternativeText": "Crash Test Dummy (Color Customizable)"
+        }
+      ],
+      "categories": [
+        "complete-projects"
+      ],
+      "tags": [],
+      "status": "published",
+      "visibility": "public",
+      "metadata": {},
+      "originalCreatedAt": "2025-09-16T16:29:41.445Z",
+      "originalUpdatedAt": "2025-09-16T16:29:41.445Z"
+    },
+    {
+      "title": "Customizable 3D Characters Complete Bundle",
+      "slug": "customizable-3d-characters-complete-bundle",
+      "shortDescription": "3D Character Customization System for your projects. Create a variety of CHARACTERS using different clothing combinations.",
+      "description": "3D Character Customization System for your projects. Create a variety of CHARACTERS using different clothing combinations.\n",
+      "price": 119.99,
+      "compareAtPrice": 199.99,
+      "available": true,
+      "images": [
+        {
+          "url": "/placeholder.svg",
+          "alternativeText": "Customizable 3D Characters Complete Bundle"
+        }
+      ],
+      "categories": [
+        "complete-projects"
+      ],
+      "tags": [],
+      "status": "published",
+      "visibility": "public",
+      "metadata": {},
+      "originalCreatedAt": "2025-09-16T16:29:41.445Z",
+      "originalUpdatedAt": "2025-09-16T16:29:41.445Z"
+    },
+    {
+      "title": "Gridbox Prototype Materials",
+      "slug": "gridbox-prototype-materials",
+      "shortDescription": "A lightweight materials set containing 20 grid materials ideal for prototyping scenes.",
+      "description": "A lightweight materials set containing 20 grid materials ideal for prototyping scenes.\n",
+      "price": 0,
+      "available": true,
+      "images": [
+        {
+          "url": "/placeholder.svg",
+          "alternativeText": "Gridbox Prototype Materials"
+        }
+      ],
+      "categories": [
+        "complete-projects"
+      ],
+      "tags": [],
+      "status": "published",
+      "visibility": "public",
+      "metadata": {},
+      "originalCreatedAt": "2025-09-16T16:29:41.446Z",
+      "originalUpdatedAt": "2025-09-16T16:29:41.446Z"
+    },
+    {
+      "title": "ICONIC: Low Poly Sports Car FREE Vol.02",
+      "slug": "iconic-low-poly-sports-car-free-vol02",
+      "shortDescription": "Iconic sports car inspired by Japanese design. Great for prototyping or low-poly/cartoon style game.",
+      "description": "Iconic sports car inspired by Japanese design. Great for prototyping or low-poly/cartoon style game.\n",
+      "price": 0,
+      "available": true,
+      "images": [
+        {
+          "url": "/placeholder.svg",
+          "alternativeText": "ICONIC: Low Poly Sports Car FREE Vol.02"
+        }
+      ],
+      "categories": [
+        "complete-projects"
+      ],
+      "tags": [],
+      "status": "published",
+      "visibility": "public",
+      "metadata": {},
+      "originalCreatedAt": "2025-09-16T16:29:41.446Z",
+      "originalUpdatedAt": "2025-09-16T16:29:41.446Z"
+    },
+    {
+      "title": "Isometric Toolkit",
+      "slug": "isometric-toolkit",
+      "shortDescription": "Makes 2.5d isometric game development in Unity accessible for your next project!",
+      "description": "Makes 2.5d isometric game development in Unity accessible for your next project! \n",
+      "price": 44.99,
+      "available": true,
+      "images": [
+        {
+          "url": "/placeholder.svg",
+          "alternativeText": "Isometric Toolkit"
+        }
+      ],
+      "categories": [
+        "complete-projects"
+      ],
+      "tags": [],
+      "status": "published",
+      "visibility": "public",
+      "metadata": {},
+      "originalCreatedAt": "2025-09-16T16:29:41.446Z",
+      "originalUpdatedAt": "2025-09-16T16:29:41.446Z"
+    },
+    {
+      "title": "Japan Village",
+      "slug": "japan-village",
+      "shortDescription": "An extraordinary village in the style of Japanese animation films. It includes stylized vegetation, house models and environment.",
+      "description": "An extraordinary village in the style of Japanese animation films. It includes stylized vegetation, house models and environment.\n",
+      "price": 74.99,
+      "compareAtPrice": 99.99,
+      "available": true,
+      "images": [
+        {
+          "url": "/placeholder.svg",
+          "alternativeText": "Japan Village"
+        }
+      ],
+      "categories": [
+        "complete-projects"
+      ],
+      "tags": [],
+      "status": "published",
+      "visibility": "public",
+      "metadata": {},
+      "originalCreatedAt": "2025-09-16T16:29:41.446Z",
+      "originalUpdatedAt": "2025-09-16T16:29:41.446Z"
+    },
+    {
+      "title": "Lens Flares URP-HDRP",
+      "slug": "lens-flares-urp-hdrp",
+      "shortDescription": "A collection of high quality lens flares elements and pre-made flares for URP/HDRP",
+      "description": "A collection of high quality lens flares elements and pre-made flares for URP/HDRP\n",
+      "price": 29.99,
+      "available": false,
+      "images": [
+        {
+          "url": "/placeholder.svg",
+          "alternativeText": "Lens Flares URP-HDRP"
+        }
+      ],
+      "categories": [
+        "complete-projects"
+      ],
+      "tags": [],
+      "status": "published",
+      "visibility": "public",
+      "metadata": {},
+      "originalCreatedAt": "2025-09-16T16:29:41.447Z",
+      "originalUpdatedAt": "2025-09-16T16:29:41.447Z"
+    },
+    {
+      "title": "Mega Fantasy Props Pack",
+      "slug": "mega-fantasy-props-pack",
+      "shortDescription": "Fill up your game with this huge fantasy prop pack that contains 280 unique prefabs!",
+      "description": "Fill up your game with this huge fantasy prop pack that contains 280 unique prefabs!\n",
+      "price": 149.99,
+      "available": true,
+      "images": [
+        {
+          "url": "/placeholder.svg",
+          "alternativeText": "Mega Fantasy Props Pack"
+        }
+      ],
+      "categories": [
+        "complete-projects"
+      ],
+      "tags": [],
+      "status": "published",
+      "visibility": "public",
+      "metadata": {},
+      "originalCreatedAt": "2025-09-16T16:29:41.447Z",
+      "originalUpdatedAt": "2025-09-16T16:29:41.447Z"
+    },
+    {
+      "title": "Toon Shader FX",
+      "slug": "toon-shader-fx",
+      "shortDescription": "Bring your cartoon and Zelda-style scenes to life with Toon Shader FX!",
+      "description": "Bring your cartoon and Zelda-style scenes to life with Toon Shader FX!\n",
+      "price": 39.99,
+      "compareAtPrice": 54.99,
+      "available": true,
+      "images": [
+        {
+          "url": "/placeholder.svg",
+          "alternativeText": "Toon Shader FX"
+        }
+      ],
+      "categories": [
+        "complete-projects"
+      ],
+      "tags": [],
+      "status": "published",
+      "visibility": "public",
+      "metadata": {},
+      "originalCreatedAt": "2025-09-16T16:29:41.447Z",
+      "originalUpdatedAt": "2025-09-16T16:29:41.447Z"
+    },
+    {
+      "title": "Unium Automated Test Tools",
+      "slug": "unium-automated-test-tools",
+      "shortDescription": "Unium is a library for the purposes of facilitating automated testing and tool development for your games.",
+      "description": "Unium is a library for the purposes of facilitating automated testing and tool development for your games. \n",
+      "price": 24.99,
+      "available": true,
+      "images": [
+        {
+          "url": "/placeholder.svg",
+          "alternativeText": "Unium Automated Test Tools"
+        }
+      ],
+      "categories": [
+        "complete-projects"
+      ],
+      "tags": [],
+      "status": "published",
+      "visibility": "public",
+      "metadata": {},
+      "originalCreatedAt": "2025-09-16T16:29:41.447Z",
+      "originalUpdatedAt": "2025-09-16T16:29:41.447Z"
+    }
+  ]
+}
