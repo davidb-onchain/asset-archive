@@ -1,0 +1,27 @@
+{
+  "assetId": "236955",
+  "title": "MIS-SoftFlying",
+  "slug": "mis-softflying",
+  "shortDescription": "MIS-SoftFlying is a custom add-on for Invector that runs based on Middleware For Invector Template (MIS).✅ Some effects for demo purposes are available only in BRP",
+  "description": "MIS-SoftFlying is a custom add-on for Invector that runs based on Middleware For Invector Template (MIS).✅ Some effects for demo purposes are available only in BRP. MIS does not responsible for the quality and compatible SRP.⭐INVECTOR THIRD PERSON TEMPLATE v2.6.4c+ REQUIRED⭐⭐Middleware For Invector Template v2.7.16+ REQUIRED⭐Invector Template (Invector) which is one of the best controllers can be upgraded with MIS and MIS Packages. If you are not familar with MIS yet, please watch this MIS v2 Quick Setup Guide.MIS-SoftFlying provides a very smooth flying experience. Perfect for casual or stylish games. Fly just like being blown away by the wind.Demo character: PicoChan⭐Key Benefits⭐✅ Provides All-In-One Setup (Invector/MIS add-ons)✅ Very smooth flying experience- Applied Air Resistance effect✅ Control- Left SHIFT + Space: Flying Toggle- WS: Pitching (provides rotation limit and Invert option)- AD: Yawing (provides rotation limit)- Left SHIFT + WASD: Fast Turn- Left CTRL: Boost- Space: Air Brake✅ 3 Types of Flying Speed- Normal: While forward obstacles are detected- Faster Flying: While no forward obstacles are not detected- Boost✅ Boost- Provides Multi-Boost✅ Fast Turn- Character rotates towards by user input- Changing the character direction while moving in the original flying direction- Speed is reduced while turning rapidly✅ Air Brake- Sliding in the air during Air Brake time✅ Collision Behaviours- None: Does nothing when collision- Cancel Flying: Flying is canceled- Collision Air Brake: Air Brake operates automatically when collision- Knock-Back: Moves backwards when Collision Air Brake✅ Crash- Ragdoll: Transits into the Ragdoll when crash- vDamage is applied✅ Landing- Landing High/Low and Sliding depending on the altitude and velocity- Ragdoll or Hard Landing when crash- vDamage is applied by high altitude and velocity✅ Death on Flying- Falling down to the ground when a character dies in the air- Falling Down Death animation when a character gets on the ground✅ Lock Camera Option- Character Follow mode (using Invector vThirdPersonCamera)- Collision Behaviour should be Cancel Flying applied✅ Boost FX- Provides stylish ReadyToBoost and Boost FXs✅ Wind FX- Automatically adjusted based on the speed✅ Included 17 animation clips✅ Flying Stamina, Boost Stamina✅ Provides chained-action between Invector/MIS add-ons- Refer to the MIS Document✅ Does not modify Invector core✅ All MIS packages runs on a feature-based basis⭐Quick Setup Sequence⭐#1 INVECTOR#2 MIS#3 PicoChan (Optional: vBots are not suitable for MIS-SoftFlying)#4 MIS-SoftFlying⭐Precautions⭐✅ No refund allowed after downloading✅ The environment and character in the demo video are not included✅ Melee/Shooter Combat features are not supported⭐Contact Information⭐✅ Email: mymobilin@gmail.com✅ Only officially supports for the latest Invector Template✅ Only officially supports for the Third-Person mode✅ Only officially supports for Humanoid characters✅ Can be used for mobile platform✅ Required Unity Editor 2022.3+✅ Required .NET 4.x",
+  "price": 34.99,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": null,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/3fb6ecb0-cd24-4337-b262-f14d09ee919d.jpg",
+  "category": "add-ons",
+  "publisher": {
+    "name": "MyMOBILIN",
+    "url": "https://assetstore.unity.com/publishers/54920",
+    "slug": "mymobilin"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/236955",
+  "sourceFile": "MIS-SoftFlying.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:21.348Z",
+  "updatedAt": "2025-10-01T22:27:50.886Z",
+  "searchQuery": "MIS SoftFlying",
+  "matchConfidence": 1
+}

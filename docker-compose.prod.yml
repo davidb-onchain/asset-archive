@@ -50,8 +50,9 @@ services:
     environment:
       - NEXT_PUBLIC_STRAPI_URL=http://strapi:1337
       - STRAPI_API_TOKEN=${READ_ONLY_TOKEN}
-    depends_on:
-      - strapi
+      - NEXT_PUBLIC_DEMO_MODE=true
+    # depends_on:
+    #   - strapi
 
 volumes:
   postgres_data:

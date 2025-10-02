@@ -1,0 +1,27 @@
+{
+  "assetId": "225235",
+  "title": "In-Game Notifications",
+  "slug": "in-game-notifications",
+  "shortDescription": "In-game notifications system with support for custom UI, fade/slide in/out effects, timed/click based dismissal, and more.In-Game Notifications is a system to manage and display in-game notifications in an easy and simple way",
+  "description": "In-game notifications system with support for custom UI, fade/slide in/out effects, timed/click based dismissal, and more.In-Game Notifications is a system to manage and display in-game notifications in an easy and simple way. The system provides many capabilities, and is fast and efficient. The system is highly customizable, so you can tailor it to fit your needs. In-Game Notifications is a great way to keep your players informed and engaged.Supported features:⚡Position in screen corners⚡Awake effects: Fade in, Slide in⚡Dismiss triggers: Timed, On click⚡Dismiss effects: Fade out, Slide out⚡Control the number of visible notifications⚡Queue additional notifications⚡Support custom UI for notifications (2 sample templates included in the asset)⚡Support extendable notifications❤️ If you like this asset then maybe you'll like these too:OnScreenKeyboard: On Screen Keyboard is an easy-to-use system to create and display keyboards within games.Find Differences Complete Game Template: Ready-to-use game template for creating a Find Differences games.Language and Profanity filter: Language and Profanity Filter is the ultimate text filter for your project.Spawn and loot randomizer: Efficient utility for a weight-based, random selector to randomly spawn enemies and generate loot.",
+  "price": 4.99,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": null,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/78adad25-9eb8-4cb2-b9f5-c0a33d5b8b08.jpg",
+  "category": "gui",
+  "publisher": {
+    "name": "Itay Sagui",
+    "url": "https://assetstore.unity.com/publishers/25607",
+    "slug": "itay-sagui"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/225235",
+  "sourceFile": "In-Game Notifications.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:21.215Z",
+  "updatedAt": "2025-10-01T22:27:50.780Z",
+  "searchQuery": "In Game Notifications",
+  "matchConfidence": 1
+}

@@ -1,0 +1,27 @@
+{
+  "assetId": "266535",
+  "title": "Body Proportions",
+  "slug": "body-proportions",
+  "shortDescription": "Body Proportions gives you the ability to change the body proportions of a 2D or 3D model by scaling the bones.Body Proportions is a tool that gives you the ability to change the proportions of the model's body by scaling the bones",
+  "description": "Body Proportions gives you the ability to change the body proportions of a 2D or 3D model by scaling the bones.Body Proportions is a tool that gives you the ability to change the proportions of the model's body by scaling the bones. With Body Proportions, you can easily change the length and width of your character's body parts and create more characters without more work.🌼Features：No coding necessary.Re-organizing bones : Scaling the bones doesn't cause distortion of the child bones.Dynamically changing body proportions in both Unity Editor and Unity Runtime.Both 3D and 2D skeletons are supported.Compatible with Unity Animation and Timeline.Multi-threaded mode based on DOTS.Scalable Bone Renderer : visualize bones.Compatible with IK (Inverse  Kinematics).9 Interactive tutorial scenes.Includes User Guide and Script Reference in two PDF files.Animation Converter: It is designed to batch convert existing animation clips into new clips that are compatible with Body Proportions.📜Quick Start :Add ScalableBonesManager component.Set root bone.Click \"Auto Setup\" button.Now you can scale bones.Dependencies:Unity.BurstUnity.CollectionsNotice:Character Boom and Unity-Chan! are used in the demo images. This package doesn't include Character Boom.Email:If you have any questions, please don't hesitate to ask us.onlynewstudio@protonmail.com",
+  "price": 25,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": 4.8,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/2f07822a-4922-47a3-8827-83129084fb41.jpg",
+  "category": "modeling",
+  "publisher": {
+    "name": "OnlyNew Studio",
+    "url": "https://assetstore.unity.com/publishers/59523",
+    "slug": "onlynew-studio"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/266535",
+  "sourceFile": "Body Proportions.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:20.343Z",
+  "updatedAt": "2025-10-01T22:27:50.209Z",
+  "searchQuery": "Body Proportions",
+  "matchConfidence": 1
+}

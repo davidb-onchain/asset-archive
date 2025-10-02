@@ -1,0 +1,27 @@
+{
+  "assetId": "232753",
+  "title": "Skies 2 - Stylized",
+  "slug": "skies-2-stylized",
+  "shortDescription": "5 stylized Skies.\nSimplicity with good performance",
+  "description": "5 stylized Skies.\nSimplicity with good performance. Quick and Easy5 stylized Sky Textures (8k), 360 degrees panoramas (2 versions of each sky: rectangualar [equirectangular] texture for 3D sphere and 6 sides skybox).This package is a stylized, cartoon version of the photorealistic package \"Skies 2 - Matte painting\".All components have been created so as to achieve the best visual quality while maintaining simplicity for optimal performance when they are used in modern computers games, mobile devices games, virtual reality and other projects.1) Skies (Skyboxes)Skies (Skyboxes and Skyspheres): 5- Rectangular version (equirectangular) - texture resolution: 8192 x 4096 pixels, 16 bit (1 Texture per sky). Material = Skybox/Panoramic- Skybox version (6 sides) - textures resolution: 2048 x 2048 pixels, 16 bit (each box side). Material = Mobile/Skybox and Skybox/6 SidedUnique 3D Meshes: 5- 1 sphere mid-poly- 1 sphere low-poly- 1 hemisphere mid-poly- 1 hemisphere low-poly- 1 flat circle as a simple terrain2) Demo Scenes: 1Dear customer. If you give me a positive rating or review, it will make me happy and motivate me to update more often and create more similar packages.",
+  "price": 10,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": null,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/c84b9bc4-8f37-4027-aeae-b51a8373892e.jpg",
+  "category": "sky",
+  "publisher": {
+    "name": "Leeyo Atelier",
+    "url": "https://assetstore.unity.com/publishers/50767",
+    "slug": "leeyo-atelier"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/232753",
+  "sourceFile": "Skies 2 - Stylized.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:21.900Z",
+  "updatedAt": "2025-10-01T22:27:51.221Z",
+  "searchQuery": "Skies 2 Stylized",
+  "matchConfidence": 1
+}

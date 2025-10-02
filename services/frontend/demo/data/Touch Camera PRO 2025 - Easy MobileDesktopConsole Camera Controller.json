@@ -1,0 +1,27 @@
+{
+  "assetId": "194808",
+  "title": "Touch Camera PRO 2025 - Easy Mobile/Desktop/Console Camera Controller",
+  "slug": "touch-camera-pro-2025-easy-mobiledesktopconsole-camera-controller",
+  "shortDescription": "A really easy to use mobile+desktop camera controller with perspective switching!Touch Camera PRO is a really easy to use mobile/desktop/console camera controller with perspective switching! It is used inside other plugins like Home Designer, Runtime Level Editor and Floor Map Designer!Working on desktop, mobile devices and console gamepads!One clean camera prefab, no nested hierarchyMany configuration variablesSupport translation, rotation around center, rotation around point, Zoom In/OutSupport multi fingers \"Twist\" and \"Pinch\" around fingers centerSupport scene bounderies5 perspective modes are available : 3D Perspective, Top Down Orthographic, Isometric Orthographic, Side Scroll, Free ModeSmooth transition between perspective modes at any time!Full C# included, and commented20 Demo scenes includedFocus on object / Follow object featureMove To (position, [rotation], [distance])Reset Camera to initial position & rotationYou can now choose between square and circle boundariesChange ground height easilyFree Camera mode (beta)New API methods and documentationNew inertia optionsNow supports Cinemachine!Now supports controllers through the new Input System!New: Now compatible with Unity6DOCUMENTATIONOnline manualAPI documentationDEMOSDownload PC & Android DemosSUPPORT FORUMhttps://support.exoa.frOTHER PLUGINSHome DesignerFloor Map DesignerHOME DESIGNER BUNDLELevel DesignerAssets Manager ProPackages Manager FreeTutorial EngineResponsive UI ProFPS FreeTouch Camera ProTouch Camera LiteSuper Hexagone Full GameRe-Pair Full Game",
+  "description": "A really easy to use mobile+desktop camera controller with perspective switching!Touch Camera PRO is a really easy to use mobile/desktop/console camera controller with perspective switching! It is used inside other plugins like Home Designer, Runtime Level Editor and Floor Map Designer!Working on desktop, mobile devices and console gamepads!One clean camera prefab, no nested hierarchyMany configuration variablesSupport translation, rotation around center, rotation around point, Zoom In/OutSupport multi fingers \"Twist\" and \"Pinch\" around fingers centerSupport scene bounderies5 perspective modes are available : 3D Perspective, Top Down Orthographic, Isometric Orthographic, Side Scroll, Free ModeSmooth transition between perspective modes at any time!Full C# included, and commented20 Demo scenes includedFocus on object / Follow object featureMove To (position, [rotation], [distance])Reset Camera to initial position & rotationYou can now choose between square and circle boundariesChange ground height easilyFree Camera mode (beta)New API methods and documentationNew inertia optionsNow supports Cinemachine!Now supports controllers through the new Input System!New: Now compatible with Unity6DOCUMENTATIONOnline manualAPI documentationDEMOSDownload PC & Android DemosSUPPORT FORUMhttps://support.exoa.frOTHER PLUGINSHome DesignerFloor Map DesignerHOME DESIGNER BUNDLELevel DesignerAssets Manager ProPackages Manager FreeTutorial EngineResponsive UI ProFPS FreeTouch Camera ProTouch Camera LiteSuper Hexagone Full GameRe-Pair Full Game",
+  "price": 39.99,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": 4.5,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/6a1dd2b7-a1ec-4dc8-800f-7ff664db5b0a.jpg",
+  "category": "camera",
+  "publisher": {
+    "name": "exoa",
+    "url": "https://assetstore.unity.com/publishers/8347",
+    "slug": "exoa"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/194808",
+  "sourceFile": "Touch Camera PRO 2025 - Easy MobileDesktopConsole Camera Controller.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:22.173Z",
+  "updatedAt": "2025-10-01T22:27:51.352Z",
+  "searchQuery": "Touch Camera PRO 2025 Easy MobileDesktopConsole Camera Controller",
+  "matchConfidence": 0.86
+}

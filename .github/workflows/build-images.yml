@@ -81,20 +81,20 @@ jobs:
           tags: |
             type=ref,event=branch
             type=ref,event=pr
-            type=sha,prefix={{branch}}-
+            type=sha,prefix=sha-
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push CMS image
         uses: docker/build-push-action@v5
         with:
-          context: ./services/cms/apps/cms
-          file: ./services/cms/apps/cms/Dockerfile
+          context: ./services/cms
+          file: ./services/cms/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
 
   build-frontend:
     needs: detect-changes
@@ -125,22 +125,23 @@ jobs:
           tags: |
             type=ref,event=branch
             type=ref,event=pr
-            type=sha,prefix={{branch}}-
+            type=sha,prefix=sha-
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push Frontend image
         uses: docker/build-push-action@v5
         with:
-          context: ./services/frontend/apps/frontend
-          file: ./services/frontend/apps/frontend/Dockerfile
+          context: ./services/frontend
+          file: ./services/frontend/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           build-args: |
             NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
+            NEXT_PUBLIC_DEMO_MODE=true
 
   summary:
     needs: [detect-changes, build-cms, build-frontend]

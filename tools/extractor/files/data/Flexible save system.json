@@ -1,0 +1,27 @@
+{
+  "assetId": "225017",
+  "title": "Flexible save system",
+  "slug": "flexible-save-system",
+  "shortDescription": "- Save Gameobjects and their data.\n- Save reference to ScriptableObjects or other GameObjects\n- Respawn objects using the save file.\n- Reload data using the save file.The flexible save system is a easy to use implementation to store runtime data for different GameObjects.You can save and load at runtime, deleted objects will get back spawned if they were saved and exist as prefab.You can save any serializable struct of data for each object.You can save objects which are prefab based to let them respawn automaticly when the get loaded back in the game.You can save nasted objects.You can save the data of non prefab objects, but its not possible to spawn them back when they got deleted at runtime",
+  "description": "- Save Gameobjects and their data.\n- Save reference to ScriptableObjects or other GameObjects\n- Respawn objects using the save file.\n- Reload data using the save file.The flexible save system is a easy to use implementation to store runtime data for different GameObjects.You can save and load at runtime, deleted objects will get back spawned if they were saved and exist as prefab.You can save any serializable struct of data for each object.You can save objects which are prefab based to let them respawn automaticly when the get loaded back in the game.You can save nasted objects.You can save the data of non prefab objects, but its not possible to spawn them back when they got deleted at runtime. Only the data will feed back to them when the save gets loaded.Position, rotation and scale of savable objects will get saved automatically. (Can be turned on and off via code or Inspector)You can create scriptableObjects with an ID to save the reference to them. Usecases:ItemTypes which shuld be stored in a Inventory.Configuration of Objects, e.g. Crafting Recipe for machines.The use is described in the demo scenes.For a detail description see: Flexible save system\\Documentation\\Flexible save system.pdf",
+  "price": 0,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": 5,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/72342996-8da1-486a-99f3-545a392db223.jpg",
+  "category": "add-ons",
+  "publisher": {
+    "name": "KROIA-Productions",
+    "url": "https://assetstore.unity.com/publishers/69663",
+    "slug": "kroia-productions"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/225017",
+  "sourceFile": "Flexible save system.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:20.801Z",
+  "updatedAt": "2025-10-01T22:27:50.518Z",
+  "searchQuery": "Flexible save system",
+  "matchConfidence": 1
+}

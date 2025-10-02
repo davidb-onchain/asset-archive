@@ -18,7 +18,7 @@ services:
 
   strapi:
     build:
-      context: ./services/cms/apps/cms
+      context: ./services/cms
     restart: always
     ports:
       - "1337:1337"
@@ -46,16 +46,18 @@ services:
 
   frontend:
     build:
-      context: ./services/frontend/apps/frontend
+      context: ./services/frontend
       args:
         - NEXT_PUBLIC_STRAPI_URL=http://strapi:1337
+        - NEXT_PUBLIC_DEMO_MODE=true
     ports:
       - "3000:3000"
     environment:
       - NEXT_PUBLIC_STRAPI_URL=http://strapi:1337
       - STRAPI_API_TOKEN=${READ_ONLY_TOKEN}
-    depends_on:
-      - strapi
+      - NEXT_PUBLIC_DEMO_MODE=true
+    # depends_on:
+    #   - strapi
 
 volumes:
   postgres_data:

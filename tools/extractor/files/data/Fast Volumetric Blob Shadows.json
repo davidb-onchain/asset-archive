@@ -1,0 +1,27 @@
+{
+  "assetId": "29928",
+  "title": "Fast Volumetric Blob Shadows",
+  "slug": "fast-volumetric-blob-shadows",
+  "shortDescription": "Shader for cheaply rendering blob shadow volumes.Adding simple rectangular or circular shadows is very easy with this asset! The shadow volume geometry can be moved, rotated, and scaled",
+  "description": "Shader for cheaply rendering blob shadow volumes.Adding simple rectangular or circular shadows is very easy with this asset! The shadow volume geometry can be moved, rotated, and scaled. Just drop the material onto a cube or sphere mesh, place it in the world, and adjust the color, sharpness, and intensity as needed. For dynamic objects, you can position it with a simple script or constraint. The shadows can be useful even in situations when full shadows are enabled but a little bit of cheap extra occlusion is desired. The material can be GPU instanced, but static and dynamic batching do not work, because batching removes transformation information necessary for the shader to function.The primary advantage this asset has over the standard Unity projector is that the projector will re-render all of the objects it affects, which can potentially increase the number of draw calls and overall cost of a scene dramatically, especially if there are multiple objects casting shadows on multiple environment objects, or the objects receiving the shadows are large or complex. The FVBS shader doesn't suffer from this issue, and will have the same cost regardless of the complexity of the scene being shadowed.Note: For the shader to work, there must be a depth texture enabled on the camera, either in the pipeline asset for the URP, or with an included script for Builtin. If the depth texture is not already enabled in your project you will see an increase in draw calls due to Unity needing to render the depth pass. If draw calls are the primary bottleneck this asset is likely not the right solution.Multiple Renderers: Builtin and URP are both supported. Works in forward and deferred pipelines.Highly Optimized: Very simple transparent shader, extremely quick to render. Suitable for mobile and VR applications. One draw call per shadow without GPU instancing, or one draw call per shadow material with GPU instancing enabled.Stable and Simple: The only scripting needed is to position the shadow volume, no special receiver scripts or render textures required.Fully Editable: Versions of the shader for Unity's Shader Graph as well as for Amplify Shader Editor are included, depending on the renderer.Various Uses: The shadow color can be set to anything, so the volumes could have multiple uses beyond shadowing: a bright color could be used as a very simple fake light.",
+  "price": 10,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": 4.6,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/a2bb1ba3-ce1d-4ac7-98ef-107bc2fb0fcf.jpg",
+  "category": "shaders",
+  "publisher": {
+    "name": "Pixel Tea",
+    "url": "https://assetstore.unity.com/publishers/8080",
+    "slug": "pixel-tea"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/29928",
+  "sourceFile": "Fast Volumetric Blob Shadows.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:20.584Z",
+  "updatedAt": "2025-10-01T22:27:50.424Z",
+  "searchQuery": "Fast Volumetric Blob Shadows",
+  "matchConfidence": 1
+}

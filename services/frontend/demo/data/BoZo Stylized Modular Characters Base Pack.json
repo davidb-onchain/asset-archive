@@ -1,0 +1,27 @@
+{
+  "assetId": "281577",
+  "title": "BoZo: Stylized Modular Characters Base Pack",
+  "slug": "bozo-stylized-modular-characters-base-pack",
+  "shortDescription": "BoZo: Stylized Modular Characters is a character creation system to allow you or your players to quickly create unique characters that are ready to play.This Asset is not required to use other packs is the series each pack is standalone.2.0 MAJOR UPDATE make sure you have a back up if you're updating👀 Features:100 Customizable outfits piecesMixable hairstyles with 10 front styles and 15 back stylesHairstyles have their own rig to allow animations and physics applied to them independentlyBase body that blends between male and femaleAdjustable Height, Head Size, and Shoulder Width and moreFacial blendshapes to create unique facesModular blendshapes to create your own unique expressionsSimple Humanoid rig compatible with mixamo and other animation packagesA Skin and Clothes shader for customizing colors (Requires the Unity shader graph installed)Includes a character customization sceneSimple Lightweight outfit Equip SystemSave System, Save as Scriptable Object and JSON *NEW*Save Character as Prefab *NEW*Merge Characters into 1 Mesh, and 1 Material *NEW*Asset Breakdown:Total: 100 Unique Assets19 Tops16 Bottoms12 Footwear3 Gloves5 Hats3 Overalls10 Front Hairstyles15 Back Hairstyles2 Head Accessories4 Face Accessories6 LowerFace Accessories3 Head1 Body1 EyesTechnical details:Polycount AveragesTops 5000 TrisBottoms 2500 TrisFootwear 1500 TrisHairBack 4000 TrisHairFront 2000 TrisHead Accessories 700 TrisFace Accessories 700 TrisHead 6000Each Textures range from 512 -1024 Tops, 256-512 Bottoms Feet and HairAll Assets contain Diffuse and Normal MapMost Outfits include Blendshapes for (BodyType, Chest Size) excluding Head, Hair, Face Accessories which have none.Custom Shaders:Ouftit Shader -Created in Shader GraphCan Customize Up to 9 ColorsLayer Up to 2 Textures (Decal, Pattern)Need Support or have questions email me at: Druelbozo@gmail.comORJoin our DiscordDocumentationSupported version: 2021.3.21f1Render pipelines: Built-in, URP, HDRPHumanoid rig with Eye bones and Jaw boneHairstyles have their own rigFor facial animations use Blendshapes.Animations are not included",
+  "description": "BoZo: Stylized Modular Characters is a character creation system to allow you or your players to quickly create unique characters that are ready to play.This Asset is not required to use other packs is the series each pack is standalone.2.0 MAJOR UPDATE make sure you have a back up if you're updating👀 Features:100 Customizable outfits piecesMixable hairstyles with 10 front styles and 15 back stylesHairstyles have their own rig to allow animations and physics applied to them independentlyBase body that blends between male and femaleAdjustable Height, Head Size, and Shoulder Width and moreFacial blendshapes to create unique facesModular blendshapes to create your own unique expressionsSimple Humanoid rig compatible with mixamo and other animation packagesA Skin and Clothes shader for customizing colors (Requires the Unity shader graph installed)Includes a character customization sceneSimple Lightweight outfit Equip SystemSave System, Save as Scriptable Object and JSON *NEW*Save Character as Prefab *NEW*Merge Characters into 1 Mesh, and 1 Material *NEW*Asset Breakdown:Total: 100 Unique Assets19 Tops16 Bottoms12 Footwear3 Gloves5 Hats3 Overalls10 Front Hairstyles15 Back Hairstyles2 Head Accessories4 Face Accessories6 LowerFace Accessories3 Head1 Body1 EyesTechnical details:Polycount AveragesTops 5000 TrisBottoms 2500 TrisFootwear 1500 TrisHairBack 4000 TrisHairFront 2000 TrisHead Accessories 700 TrisFace Accessories 700 TrisHead 6000Each Textures range from 512 -1024 Tops, 256-512 Bottoms Feet and HairAll Assets contain Diffuse and Normal MapMost Outfits include Blendshapes for (BodyType, Chest Size) excluding Head, Hair, Face Accessories which have none.Custom Shaders:Ouftit Shader -Created in Shader GraphCan Customize Up to 9 ColorsLayer Up to 2 Textures (Decal, Pattern)Need Support or have questions email me at: Druelbozo@gmail.comORJoin our DiscordDocumentationSupported version: 2021.3.21f1Render pipelines: Built-in, URP, HDRPHumanoid rig with Eye bones and Jaw boneHairstyles have their own rigFor facial animations use Blendshapes.Animations are not included. Supports Mixamo and other animation packagesPhysics are not included.Rigging: YesUV mapping: YesNo LODsPolycount Ranges from 13k-25k depending on customizationEach Textures range from 512 -1024 Tops, 256-512 Bottoms Feet and HairAll Clothes and Hairstyles contain Diffuse and Normal Map",
+  "price": 40,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": 4.6,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/e2185033-7117-45dd-bed5-54d91528be33.jpg",
+  "category": "humans",
+  "publisher": {
+    "name": "BoZo",
+    "url": "https://assetstore.unity.com/publishers/99362",
+    "slug": "bozo"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/281577",
+  "sourceFile": "BoZo Stylized Modular Characters Base Pack.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:20.232Z",
+  "updatedAt": "2025-10-01T22:27:50.158Z",
+  "searchQuery": "BoZo Stylized Modular Characters Base Pack",
+  "matchConfidence": 1
+}

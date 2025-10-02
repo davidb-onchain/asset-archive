@@ -1,0 +1,27 @@
+{
+  "assetId": "318780",
+  "title": "Ushi Arcade Car Physics Free",
+  "slug": "ushi-arcade-car-physics-free",
+  "shortDescription": "This asset is a sample of Ushi Arcade Car Physics.The demo scene is made with the built-in render pipeline, but the script itself does not have any dependencies on a specific render pipeline, so it can be used with any render pipeline.WebGL DemoEmailThis asset is a sample of a small part of Ushi Arcade Car Physics",
+  "description": "This asset is a sample of Ushi Arcade Car Physics.The demo scene is made with the built-in render pipeline, but the script itself does not have any dependencies on a specific render pipeline, so it can be used with any render pipeline.WebGL DemoEmailThis asset is a sample of a small part of Ushi Arcade Car Physics. It is perfect for those who need a simple car behavior.All source code is accessible. We do not make the source code secret by making it a dll, which is common in free versions. It is highly extensible and is suitable as a base for creating original car behavior.The paid version of Ushi Arcade Car Physics comes with many times more scripts than this asset. It comes with a car controller with a gasoline-powered drivetrain, various cameras, AI, effects, and a wide variety of other scripts. If you like this asset, please consider purchasing the paid version.The input uses the old Input Manager. To continue using it, you need to switch Project Settings > Player > Active Input Handling to Input Manager (Old). I plan to migrate to the Input System in the near future.Because WheelCollider is not used, it cannot stay completely still on the slope. This is a problem with the physics engine and there is nothing that can be done about it. It is by design.",
+  "price": 0,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": null,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/13f4ff3b-9c42-4557-ae8d-62c771f2d8b0.jpg",
+  "category": "physics",
+  "publisher": {
+    "name": "UshiSoft",
+    "url": "https://assetstore.unity.com/publishers/107044",
+    "slug": "ushisoft"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/318780",
+  "sourceFile": "Ushi Arcade Car Physics Free.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:22.226Z",
+  "updatedAt": "2025-10-01T22:27:51.385Z",
+  "searchQuery": "Ushi Arcade Car Physics Free",
+  "matchConfidence": 1
+}

@@ -1,0 +1,27 @@
+{
+  "assetId": "178561",
+  "title": "Home Designer 2025 - Realtime Interior Designer",
+  "slug": "home-designer-2025-realtime-interior-designer",
+  "shortDescription": "Home Designer allows you or your players to design their own room(s)",
+  "description": "Home Designer allows you or your players to design their own room(s). These rooms are then accessible directly to be played in-game!\n\nThis plugin comes with an example \"Kitchen\" asset folder.Home Designer is an easy to use interior designer for your projects and clients!FEATURES :Integration with \"Floor Map Designer\" (separate plugin, see links below) to create your own rooms!Added \"Touch Camera Lite\" for free inside, for full camera control on desktop and mobile devices with perspective and top down view modes!Templates to create the level \"modules\".5 types of snapping : Joint based, walls, ceiling, grid, colliders.Wall & floor materials selector.Quote generator.Automatic menu creation will all your modules stored in the Resources/Modules/ folder.Bulk thumbnails generation.Save/Load levels in json.Move, Rotate,Scale objects using keyboard keysKitchen sample included + \"PlayMode\" Scene to load back a level inside your game or application.Full source code included.WebGL Support.HDRP & URP shaders*NEW* API to generate your own rooms from JSON files*NEW* Window to help you manage your categories, products, prefabs and thumbnails!*NEW* FBX Export in editor*NEW* New demo scene to spawn your rooms using code*NEW* New prefab to place your room without code and prebake them in editor!*NEW* Modules material selector to customize your objects colors and materials*NEW* Per wall material selection + texture tiling slidersRENDERING PIPELINES SUPPORTED :Built-InUniversal Render Pipeline (URP)High Definition Render Pipeline (HDRP)NOTES :Home Designer does not come with 3D model collections, aside from the sample kitchen 3d models shown in the video and in the demo app.Please check the documentations or the video tutorial to install.PC DEMOSFloor Map Designer + Home DesignerDOCUMENTATIONOnline ManualSUPPORT FORUMProducts Support Forum OTHER PLUGINSHome DesignerFloor Map DesignerOnline ModuleHOME DESIGNER BUNDLELevel DesignerAssets Manager ProPackages Manager FreeTutorial EngineResponsive UI ProFPS FreeTouch Camera ProTouch Camera LiteSuper Hexagone Full GameRe-Pair Full GameHAPPY HOME DESIGNING!Plugin dependencies to install :DOTween (free)Lean Touch (free)",
+  "price": 75,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": 5,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/c3d03519-0c0d-4f0a-bb47-0d233cab30a6.jpg",
+  "category": "level-design",
+  "publisher": {
+    "name": "exoa",
+    "url": "https://assetstore.unity.com/publishers/8347",
+    "slug": "exoa"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/178561",
+  "sourceFile": "Home Designer 2025 - Realtime Interior Designer.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:21.079Z",
+  "updatedAt": "2025-10-01T22:27:50.679Z",
+  "searchQuery": "Home Designer 2025 Realtime Interior Designer",
+  "matchConfidence": 1
+}

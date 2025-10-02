@@ -1,0 +1,27 @@
+{
+  "assetId": "285638",
+  "title": "Ragdoll Animator 2",
+  "slug": "ragdoll-animator-2",
+  "shortDescription": "Construct physical rigs easily.\nUnlock exciting new capabilities for your projects.\nSet up your humanoid ragdoll instantly.\nUse on animals and on any kind of creature models.⚡ Bring physical behavior for your charactersAnimate your models using physics, make them fall and get up seamlessly, apply physical hit reactions, and interact with environment in an easy, controlled way.⭐ Quick setupSet up humanoid characters with just a few clicks",
+  "description": "Construct physical rigs easily.\nUnlock exciting new capabilities for your projects.\nSet up your humanoid ragdoll instantly.\nUse on animals and on any kind of creature models.⚡ Bring physical behavior for your charactersAnimate your models using physics, make them fall and get up seamlessly, apply physical hit reactions, and interact with environment in an easy, controlled way.⭐ Quick setupSet up humanoid characters with just a few clicks. Set up other rigs with a lot of automatic assistance and scene gizmos. Tweak all settings with a clear preview of physical reactions.💡 Ease of useA carefully designed GUI will help you quickly navigate between setup stages.Check out tutorials for a quick dive into the Ragdoll Animator system.Check additional documentation files for user helper methods and a list of extra features.☄️ Use along with Unity physics componentsRagdoll Animator uses rigidbody and joint physics, so you can easily apply Unity's components with ragdoll animator rig. Use spring joints to simulate a character attached to a rope. Use fixed joints to attach physical items to the ragdoll animator rig.✍ Extra Features APIThe plugin comes with an \"Extra Features\" API which allows you to apply custom scripts in Ragdoll Animator update loops without modifying the core code. This enables many cool behaviors, and you will find more than 25 extra features included in the release version.⚙️ Equipables APIThanks to this API, you can attach helmeds / hand items to the ragdoll character, including their physics, and also apply custom heavyness of the items to influence the physical animation of the skeleton.🔧 Helpful Utility ComponentsRagdoll Animator 2 comes with additional components, like Magnet Points: for rigidbody manipulation, and a Joint Chains Generator / Single Animated Chain, which you can find really useful for designing custom physical interations.⌛ Great PerformanceThanks to the plugin's fidelity, you can switch On and Off features you don't need to save performance. You can constantly preview cost of each Ragdoll Animator within the inspector window by hitting green debug icon. You can enable camera view and distance-based or level of detail optimization using Extra Features.Check demo scenes: Windows x64Android APK (not all demo scenes included)Package works on all SRPs! It's not shader related package.(You just need to covert standard Demo materials for demo examples)Built In ✅ LWRP ✅ URP ✅ HDRP ✅ Custom RP ✅Community Forum Thread LinkPreview User Manual hereOur Discord for Support⚙️ Ragdoll Animator 1 reminder:This is full rewrite of Ragdoll Animator 1, giving much better control, cleaner setup and adding many new features. All owners of Ragdoll Animator 1 can do a free upgrade to the Ragdoll Animator 2! That also means, you need to setup Ragdoll Animator 2 on your characters again. Ragdoll Animator 1 and body generated components, need to be removed from your character before using Ragdoll Animator 2. You can remove Ragdoll Animator 1 directories from your project now.⚙️ Unity versions below 2022 info:Ragdoll Animator 2 will work on earlier unity versions, like 2019, but there can be issues with demos, caused by scene downgrade conversion. You will find \"Demos - Unity Versions Below 2022 fix\" unitypackage in the ragdoll animator directory, which fixes most of the conversion problems. (first unpack demos, then unpack fix)⚙️ Unity 6 warning:Configurable Joints limits are bugged since Unity v6.0 to version 6.0.9Check bug tracker to see if it is fixed in your version.- Carefully designed inspector view GUI- Tweak with clear preview in scene view- Tweak and watch effect of parameters runtime- Auto-setup features for humanoids and non humanoids- Cooperating with unity physics components- Better physical-to keyframe animation match precision- Fully documented- Tooltips for all parameters in the inspector window- More than 30 cool example scenes (packed in .unitypackage)- High performance- Optimization and culling features- Custom Features API- Many Helpful User_Utility extension methods",
+  "price": 36.99,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": 4.8,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/ef4b5cb3-9bd7-4015-b065-5dc6f8c79f77.jpg",
+  "category": "physics",
+  "publisher": {
+    "name": "FImpossible Creations",
+    "url": "https://assetstore.unity.com/publishers/37262",
+    "slug": "fimpossible-creations"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/285638",
+  "sourceFile": "Ragdoll Animator 2.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:21.611Z",
+  "updatedAt": "2025-10-01T22:27:51.020Z",
+  "searchQuery": "Ragdoll Animator 2",
+  "matchConfidence": 1
+}

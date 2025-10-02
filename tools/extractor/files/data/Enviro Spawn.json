@@ -1,0 +1,27 @@
+{
+  "assetId": "55594",
+  "title": "Enviro Spawn",
+  "slug": "enviro-spawn",
+  "shortDescription": "Tool for populating large areas with environment details!By default assets are on the Built-in rendering pipeline (but are easily upgradable through the standard material tools)EnviroSpawn is an easy to use tool for populating large areas with environment details such as grass, rocks, trees, etc.Drag the wanted models into the tool and set the dimensions and density, the tool will spawn the environment details for you.It is an improvement over the tree system of Unity",
+  "description": "Tool for populating large areas with environment details!By default assets are on the Built-in rendering pipeline (but are easily upgradable through the standard material tools)EnviroSpawn is an easy to use tool for populating large areas with environment details such as grass, rocks, trees, etc.Drag the wanted models into the tool and set the dimensions and density, the tool will spawn the environment details for you.It is an improvement over the tree system of Unity. It works on any surface with colliders including terrain mesh.Inside the package are included the EnviroSpawn script as well as free to use meshes and textures.Read the HOW TO USE guide to get you started with the tool.For support, contact me via: krisdevmail@gmail.comBy default assets are on the Built-in rendering pipeline (but are easily upgradable through the standard material tools)",
+  "price": 0,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": 4.5,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/7f33a2fe-1b17-4375-b3a6-9ec7c1f535dd.jpg",
+  "category": "level-design",
+  "publisher": {
+    "name": "KrisDevelopment",
+    "url": "https://assetstore.unity.com/publishers/15535",
+    "slug": "krisdevelopment"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/55594",
+  "sourceFile": "Enviro Spawn.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:20.520Z",
+  "updatedAt": "2025-10-01T22:27:50.363Z",
+  "searchQuery": "Enviro Spawn",
+  "matchConfidence": 1
+}

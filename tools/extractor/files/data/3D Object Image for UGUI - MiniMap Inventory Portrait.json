@@ -1,0 +1,27 @@
+{
+  "assetId": "275542",
+  "title": "3D Object Image for UGUI - MiniMap Inventory Portrait",
+  "slug": "3d-object-image-for-ugui-minimap-inventory-portrait",
+  "shortDescription": "Show 3D objects in your UI",
+  "description": "Show 3D objects in your UI. Ideal for inventories, NPC portraits or Mini-maps.Links: Manual | Support🐭 This asset is part of the UI Bundle🐭Render 3D world objects or prefabs in your UI.🌈 Use CasesYou want to show 3D items in your inventory UI?Add the PrefabInstantiator to the WorldImage component, drag in your prefabs and you are done.Want to have 3D portraits in a UI image?Simply drag in the transform of the NPC into the list of objects and you are done.You need a top-down mini-map of the level?Empty the list of objects. Then use \"Camera Look At\" and \"Camera position\" to have the camera high up in the sky looking down. Done.😎 Simple Workflow1) Right-Click > UI > World Image2) Select object(s) from scene3) Done🎯 Compatible with Built-In, URP and HDRPWorks the the same in all render pipelines.✔️ Works just like an ImageIs based on the default Maskable Graphic. This means it works like the default UI image. You can mask it, change the material, ... .📚 Lots of examples & documentationCheck out Kamgam/UGUIWorldImage/Examples.✔️ Full Source CodeI publish this asset with full source code because as a developer I know how annoying it is to not have source code access. If you like it then please remind others to purchase the plugin. Don't just copy and paste it everywhere. Thank you ❤️✔️ Supports Unity 2021.3+, 2022, 2023, Unity 6, .. LTSIt may work with earlier versions too but those are not tested anymore.👇 Things you should know 👇 (Read this before you buy):There is an intro section in the manual. Please read it first.⚠️ This asset is for the default UI (uGUI). If you want to use it in the new UI Toolkit then please check out the UI Toolkit asset instead.⚠️ Transparent objects work right out of the box but there are some caveats. Please check the \"Transparency\" section in the manual for more details.✍️ Usage1) Right-Click on your canvas and choose UI > World Image (uGUI)2) Add the objects to render into the list (scene objects).3) Done😎 HINT 1:Disable \"Use Render Textures\" to enable the improved transparency workflow (uses camera stacking instead of render textures).🧐 HINT 2:Use the PrefabInstantiator to instantiate your prefabs on demand with ease.🤠 HINT 3:If your object is moving or animating then then use \"FollowTransfrom\" instead of \"Follow Bounds\" (removes the jittery motion if the bounds change frequently).☎️ SupportIf you have any questions please write to office[at]kamgam.com. Please be patient, replies may take a few days. Please include your Asset Store Order Nr and the exact Unity version in your request. Please also try upgrading to the most recent LTS version before asking. Thank you.❤️ If you like this asset then maybe you'll like these too:😲 UGUI Blurred BackgroundBlurred backgrounds for UI.✨ UI Inverse maskPunch holes into your UI.✏️ Smart UI SelectionSkip the hierarchy search. What you click is what you select.⚙ Settings GeneratorOne Settings UI + API for all render pipelines.",
+  "price": 29.99,
+  "points": 200,
+  "compareAtPrice": null,
+  "available": "N/A",
+  "rating": null,
+  "thumbnail": "https://assetstorev1-prd-cdn.unity3d.com/key-image/2d894cc6-7e36-40ca-809a-7e78fe913438.jpg",
+  "category": "gui",
+  "publisher": {
+    "name": "KAMGAM",
+    "url": "https://assetstore.unity.com/publishers/37829",
+    "slug": "kamgam"
+  },
+  "productUrl": "https://assetstore.unity.com/packages/package/275542",
+  "sourceFile": "3D Object Image for UGUI - MiniMap Inventory Portrait.unitypackage",
+  "status": "draft",
+  "visibility": "public",
+  "createdAt": "2025-10-01T17:50:20.007Z",
+  "updatedAt": "2025-10-01T22:27:49.983Z",
+  "searchQuery": "3D Object Image for UGUI MiniMap Inventory Portrait",
+  "matchConfidence": 1
+}
