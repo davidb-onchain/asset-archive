@@ -103,16 +103,20 @@ jobs:
           echo "🔄 Starting container update process..."
           cd /opt/asset-archive
           
-          # Update docker-compose.yml with new image tags
+          # Update .env file with new image tags
           if [ ! -z "${{ steps.images.outputs.cms_image }}" ]; then
-            sed -i "s|image: .*asset-archive-cms.*|image: ${{ steps.images.outputs.cms_image }}|g" docker-compose.yml
+            sed -i "s|CMS_IMAGE=.*|CMS_IMAGE=${{ steps.images.outputs.cms_image }}|g" .env
             echo "✅ Updated CMS image to: ${{ steps.images.outputs.cms_image }}"
           fi
           
           if [ ! -z "${{ steps.images.outputs.frontend_image }}" ]; then
-            sed -i "s|image: .*asset-archive-frontend.*|image: ${{ steps.images.outputs.frontend_image }}|g" docker-compose.yml  
+            sed -i "s|FRONTEND_IMAGE=.*|FRONTEND_IMAGE=${{ steps.images.outputs.frontend_image }}|g" .env
             echo "✅ Updated Frontend image to: ${{ steps.images.outputs.frontend_image }}"
           fi
+          
+          # Show updated image tags
+          echo "📋 Current image configuration:"
+          grep -E "(CMS_IMAGE|FRONTEND_IMAGE)" .env
           
           # Pull new images
           echo "📥 Pulling new container images..."

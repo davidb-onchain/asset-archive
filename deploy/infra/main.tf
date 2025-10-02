@@ -116,8 +116,8 @@ resource "digitalocean_droplet" "app" {
     spaces_region            = var.region
 
     # Container images - now managed by GitHub Actions direct SSH deployment
-    cms_image      = "ghcr.io/davidb-onchain/asset-archive-cms:develop-137d3d6"
-    frontend_image = "ghcr.io/davidb-onchain/asset-archive-frontend:develop-137d3d6"
+    cms_image      = "ghcr.io/davidb-onchain/asset-archive-cms:latest"
+    frontend_image = "ghcr.io/davidb-onchain/asset-archive-frontend:latest"
 
     # Database configuration
     postgres_db       = var.postgres_db
